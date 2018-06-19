@@ -1,0 +1,22 @@
+{
+  "name": "dssat-web",
+  "version": "1.0.0",
+  "description": "dssat web application",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jabreuar/dssat-web.git"
+  },
+  "keywords": [
+    "dssat"
+  ],
+  "author": "Jonas Abreu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jabreuar/dssat-web/issues"
+  },
+  "homepage": "https://github.com/jabreuar/dssat-web#readme"
+}
