@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/jabreuar/dssat-web/issues"
   },
-  "homepage": "https://github.com/jabreuar/dssat-web#readme"
+  "homepage": "https://github.com/jabreuar/dssat-web#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
 }
