@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
+    <title>DSSAT-Lite</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Vector CSS -->
+    <link href="css/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="css/style.css" rel="stylesheet">
+    <!-- You can change the theme colors from here -->
+    <link href="css/colors/blue.css" id="theme" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body class="fix-header fix-sidebar card-no-border logo-center">
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> </svg>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <header class="topbar">
+            <nav class="navbar top-navbar navbar-expand-md navbar-light">
+                <!-- ============================================================== -->
+                <!-- Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="index.html">
+                        <!-- Logo text -->
+                        <span>
+                            <!-- Light Logo text -->
+                            <img src="./images/DSSAT-LOGO.png" class="light-logo" alt="homepage" />
+                        </span>
+                        <span style="color: aliceblue;">
+                            <b>Lite</b>
+                        </span>
+                    </a>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- ============================================================== -->
+            </nav>
+        </header>
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <aside class="left-sidebar">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar" align="center">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                        <li>
+                            <a class="has-arrow" href="#" aria-expanded="false">
+                                <i class="mdi mdi-gauge"></i>
+                                <span class="hide-menu">Dashboard </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="has-arrow " href="#" aria-expanded="false">
+                                <i class="mdi mdi-bullseye"></i>
+                                <span class="hide-menu">Browser Files</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- End Sidebar navigation -->
+            </div>
+            <!-- End Sidebar scroll-->
+        </aside>
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid" style="max-width: 90%">
+                <!-- ============================================================== -->
+                <!-- Bread crumb and right sidebar toggle -->
+                <!-- ============================================================== -->
+                <div class="row page-titles">
+                    <div class="col-md-5 col-8 align-self-center">
+                        <h3 class="text-themecolor">Dashboard </h3>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="javascript:void(0)">Home</a>
+                            </li>
+                            <li class="breadcrumb-item active">Dashboard</li>
+                        </ol>
+                    </div>
+                    <div class="col-md-7 col-4 align-self-center">
+                        <div class="d-flex m-t-10 justify-content-end">
+                            <div class="">
+                                <button class="right-side-toggle waves-effect waves-light btn-success btn btn-circle btn-sm pull-right m-l-10">
+                                    <i class="ti-settings text-white"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Bread crumb and right sidebar toggle -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <!-- Tabs -->
+                <div class="row">
+                    <div style="width: 100%">
+                        <div class="card">
+                            <div class="card-body">
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" data-toggle="tab" href="#selector" role="tab">
+                                            <span class="hidden-sm-up">
+                                                <i class="ti-home"></i>
+                                            </span>
+                                            <span class="hidden-xs-down">Selector</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#experiments" role="tab">
+                                            <span class="hidden-sm-up">
+                                                <i class="ti-user"></i>
+                                            </span>
+                                            <span class="hidden-xs-down">Experiments</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#treatments" role="tab">
+                                            <span class="hidden-sm-up">
+                                                <i class="ti-email"></i>
+                                            </span>
+                                            <span class="hidden-xs-down">Treatments</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#outputs" role="tab">
+                                            <span class="hidden-sm-up">
+                                                <i class="ti-email"></i>
+                                            </span>
+                                            <span class="hidden-xs-down">Model Outputs</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <!-- Tab panes -->
+                                <div class="tab-content tabcontent-border">
+                                    <div class="tab-pane active" id="selector" role="tabpanel">
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <div class="card card-outline-success">
+                                                    <div class="card-body">
+                                                        <h3 class="card-title">Cereals</h3>
+                                                        <div class="btn-group dropright">
+                                                            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                Crops
+                                                            </button>
+                                                            <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(112px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                                <a class="dropdown-item" href="#">Barley</a>
+                                                                <a class="dropdown-item" href="#">Maize</a>
+                                                                <a class="dropdown-item" href="#">Pearl Millet</a>
+                                                                <a class="dropdown-item" href="#">Rice</a>
+                                                                <a class="dropdown-item" href="#">Grain Sorghum</a>
+                                                                <a class="dropdown-item" href="#">Wheat</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h3 class="card-title">Legumes</h3>
+                                                        <div class="btn-group dropright">
+                                                            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                Crops
+                                                            </button>
+                                                            <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(112px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                                <a class="dropdown-item" href="#">Chickpea</a>
+                                                                <a class="dropdown-item" href="#">Cowpea</a>
+                                                                <a class="dropdown-item" href="#">Dry Bean</a>
+                                                                <a class="dropdown-item" href="#">Faba Bean</a>
+                                                                <a class="dropdown-item" href="#">Peanut</a>
+                                                                <a class="dropdown-item" href="#">Pigeon Pea</a>
+                                                                <a class="dropdown-item" href="#">Soybean</a>
+                                                                <a class="dropdown-item" href="#">Velvet Bean</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h3 class="card-title">Root Crops</h3>
+                                                        <div class="btn-group dropright">
+                                                            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                Crops
+                                                            </button>
+                                                            <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(112px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                                <a class="dropdown-item" href="#">Cassava</a>
+                                                                <a class="dropdown-item" href="#">Potato</a>
+                                                                <a class="dropdown-item" href="#">Tanier</a>
+                                                                <a class="dropdown-item" href="#">Taro</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h3 class="card-title">Oil Crops</h3>
+                                                        <div class="btn-group dropright">
+                                                            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                Crops
+                                                            </button>
+                                                            <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(112px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                                <a class="dropdown-item" href="#">Canola</a>
+                                                                <a class="dropdown-item" href="#">Safflower</a>
+                                                                <a class="dropdown-item" href="#">Sunflower</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h3 class="card-title">Vegetables</h3>
+                                                        <div class="btn-group dropright">
+                                                            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                Crops
+                                                            </button>
+                                                            <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(112px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                                <a class="dropdown-item" href="#">Pepper</a>
+                                                                <a class="dropdown-item" href="#">Cabbage</a>
+                                                                <a class="dropdown-item" href="#">Tomato</a>
+                                                                <a class="dropdown-item" href="#">Sweetcorn</a>
+                                                                <a class="dropdown-item" href="#">Green Bean</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h3 class="card-title">Fiber</h3>
+                                                        <div class="btn-group dropright">
+                                                            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                Crops
+                                                            </button>
+                                                            <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(112px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                                <a class="dropdown-item" href="#">Cotton</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h3 class="card-title">Forages</h3>
+                                                        <div class="btn-group dropright">
+                                                            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                Crops
+                                                            </button>
+                                                            <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(112px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                                <a class="dropdown-item" href="#">Alfalfa</a>
+                                                                <a class="dropdown-item" href="#">Bahia Grass</a>
+                                                                <a class="dropdown-item" href="#">Bermuda Grass</a>
+                                                                <a class="dropdown-item" href="#">Brachiaria</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h3 class="card-title">Sugar/Energy</h3>
+                                                        <div class="btn-group dropright">
+                                                            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                Crops
+                                                            </button>
+                                                            <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(112px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                                <a class="dropdown-item" href="#">Sugarcane</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h3 class="card-title">Fruit Crops</h3>
+                                                        <div class="btn-group dropright">
+                                                            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                Crops
+                                                            </button>
+                                                            <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(112px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                                <a class="dropdown-item" href="#">Pineapple</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h3 class="card-title">Variuos</h3>
+                                                        <div class="btn-group dropright">
+                                                            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                Crops
+                                                            </button>
+                                                            <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(112px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                                <a class="dropdown-item" href="#">Fallow</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--<div id="tree" class="treeview"></div>-->
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane  p-20" id="experiments" role="tabpanel">
+                                        <div class="card">
+                                            <!-- Nav tabs -->
+                                            <ul class="nav nav-tabs customtab" role="tablist">
+                                                <li class="nav-item">
+                                                    <a class="nav-link active show" data-toggle="tab" href="#experiments" role="tab" aria-selected="true">
+                                                        <span class="hidden-sm-up">
+                                                            <i class="ti-home"></i>
+                                                        </span>
+                                                        <span class="hidden-xs-down">Experiments</span>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" data-toggle="tab" href="#data" role="tab" aria-selected="false">
+                                                        <span class="hidden-sm-up">
+                                                            <i class="ti-user"></i>
+                                                        </span>
+                                                        <span class="hidden-xs-down">Data</span>
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" data-toggle="tab" href="#output" role="tab" aria-selected="false">
+                                                        <span class="hidden-sm-up">
+                                                            <i class="ti-email"></i>
+                                                        </span>
+                                                        <span class="hidden-xs-down">Output</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                            <!-- Tab panes -->
+                                            <div class="tab-content">
+                                                <div class="tab-pane active show" id="experiments" role="tabpanel">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-body">
+                                                            <table id="tblExperiments" class="table table-bordered table-hover">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="center"></th>
+                                                                        <th>#</th>
+                                                                        <th class="detail-col">Experiment</th>
+                                                                        <th>Description</th>
+                                                                        <th>Modified</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="panel-footer">
+                                                            <div class="btn-group">
+                                                                <button type="button" class="btn waves-effect waves-light btn-outline-success" id="btnViewFileExperiements">View</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane p-20" id="data" role="tabpanel">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-body">
+                                                            <table id="tblDataContent" class="table table-bordered table-hover">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="detail-col">Experimental Data</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="panel-footer">
+                                                            <div class="row">
+                                                                <div class="btn-group">
+                                                                    <button type="button" class="btn waves-effect waves-light btn-outline-success" id="btnViewFileFromDataContent">View</button>
+                                                                    <button type="button" class="btn waves-effect waves-light btn-outline-primary">Plot</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane p-20" id="output" role="tabpanel">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-body">
+                                                            <table id="tblModelOutputFiles" class="table table-bordered table-hover">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="detail-col">Model Output Files</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="panel-footer">
+                                                            <div class="row">
+                                                                <div class="btn-group">
+                                                                    <button class="btn btn-xs btn" id="btnViewFile">
+                                                                        <i class="ace-icon fa fa-pencil-square-o bigger-110"></i>
+                                                                        View
+                                                                    </button>
+                                                                    <button class="btn btn-xs btn" id="btnPlotOutFileFromGenericOutputs">
+                                                                        <i class="ace-icon fa fa-pencil-square-o bigger-110"></i>
+                                                                        Plot File
+                                                                    </button>
+                                                                    <button class="btn btn-xs btn" id="btnViewAllOutputFiles">
+                                                                        <i class="ace-icon fa fa-bolt bigger-110"></i>
+                                                                        View All Output Files </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane p-20" id="treatments" role="tabpanel">
+                                        <table id="tblTreatments" class="table  table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th class="center" style="width: 5%">
+                                                        <label class="pos-rel">
+                                                            <input type="checkbox" class="ace" />
+                                                            <span class="lbl"></span>
+                                                        </label>
+                                                    </th>
+                                                    <th class="center" style="width: 5%">#</th>
+                                                    <th class="center">Treatment</th>
+                                                    <th class="center">Experiment</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="tab-pane p-20" id="outputs" role="tabpanel">
+                                        <table id="tblOutputs" class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th class="center" style="width: 10%" colspan="2">Actions</th>
+                                                    <th class="center">Model Output Files</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tabs -->
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Right sidebar -->
+                <!-- ============================================================== -->
+                <!-- .right-sidebar -->
+                <div class="right-sidebar">
+                    <div class="slimscrollright">
+                        <div class="rpanel-title"> Service Panel
+                            <span>
+                                <i class="ti-close right-side-toggle"></i>
+                            </span>
+                        </div>
+                        <div class="r-panel-body">
+                            <ul id="themecolors" class="m-t-20">
+                                <li>
+                                    <b>With Light sidebar</b>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" data-theme="default" class="default-theme">1</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" data-theme="green" class="green-theme">2</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" data-theme="red" class="red-theme">3</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" data-theme="blue" class="blue-theme working">4</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" data-theme="purple" class="purple-theme">5</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" data-theme="megna" class="megna-theme">6</a>
+                                </li>
+                                <li class="d-block m-t-30">
+                                    <b>With Dark sidebar</b>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" data-theme="default-dark" class="default-dark-theme">7</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" data-theme="green-dark" class="green-dark-theme">8</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" data-theme="red-dark" class="red-dark-theme">9</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" data-theme="blue-dark" class="blue-dark-theme">10</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" data-theme="purple-dark" class="purple-dark-theme">11</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" data-theme="megna-dark" class="megna-dark-theme ">12</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Right sidebar -->
+                <!-- ============================================================== -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            <footer class="footer">
+                © 2018 DSSAT
+            </footer>
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="./js/jquery/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="./js/popper/popper.min.js"></script>
+    <script src="./js/bootstrap/bootstrap.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="./js/jquery.slimscroll.js"></script>
+    <!--Wave Effects -->
+    <script src="./js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="./js/sidebarmenu.js"></script>
+    <!--stickey kit -->
+    <script src="./js/sticky-kit-master/dist/sticky-kit.min.js"></script>
+    <script src="./js/sparkline/jquery.sparkline.min.js"></script>
+    <!--stickey kit -->
+    <script src="./js/sticky-kit-master/dist/sticky-kit.min.js"></script>
+    <script src="./js/sparkline/jquery.sparkline.min.js"></script>
+
+    <!--Custom JavaScript -->
+    <script src="./js/custom.min.js"></script>
+    <!-- ============================================================== -->
+    <!-- This page plugins -->
+    <!-- ============================================================== -->
+    <!-- Vector map JavaScript -->
+    <script src="./js/vectormap/jquery-jvectormap-2.0.2.min.js"></script>
+    <script src="./js/assets/plugins/vectormap/jquery-jvectormap-us-aea-en.js"></script>
+    <script src="./js/dashboard2.js"></script>
+    <!-- ============================================================== -->
+    <!-- Style switcher -->
+    <!-- ============================================================== -->
+    <script src="./js/jQuery.style.switcher.js"></script>
+
+    <!-- Treeview Plugin JavaScript -->
+    <script src="./js/bootstrap-treeview.js"></script>
+
+
+    <!-- ============================================================== -->
+    <!-- DSSAT -->
+    <!-- ============================================================== -->
+
+    <script type="text/javascript">
+
+        function getTree() {
+
+            let defaultData = [
+                {
+                    text: 'Crops',
+                    href: '#parent1',
+                    tags: ['11'],
+                    nodes: [
+                        {
+                            text: 'Cereals',
+                            href: '#child1',
+                            tags: ['2'],
+                            nodes: [
+                                {
+                                    text: 'Barley',
+                                    href: '#grandchild1',
+                                    tags: ['2']
+                                },
+                                {
+                                    text: 'Maize',
+                                    href: '#grandchild2',
+                                    tags: ['2']
+                                },
+                                {
+                                    text: 'Pearl Millet',
+                                    href: '#grandchild2',
+                                    tags: ['2']
+                                },
+                                {
+                                    text: 'Rice',
+                                    href: '#grandchild2',
+                                    tags: ['2']
+                                },
+                                {
+                                    text: 'Grain Sorghum',
+                                    href: '#grandchild2',
+                                    tags: ['2']
+                                },
+                                {
+                                    text: 'Wheat',
+                                    href: '#grandchild2',
+                                    tags: ['2']
+                                }
+                            ]
+                        },
+                        {
+                            text: 'Legumes',
+                            href: '#child2',
+                            tags: ['3'],
+                            nodes: [
+                                {
+                                    text: 'Chikpea',
+                                    href: '#grandchild1',
+                                    tags: ['3']
+                                },
+                                {
+                                    text: 'Cowpea',
+                                    href: '#grandchild2',
+                                    tags: ['3']
+                                },
+                                {
+                                    text: 'Dry bean',
+                                    href: '#grandchild2',
+                                    tags: ['3']
+                                },
+                                {
+                                    text: 'Faba Bean',
+                                    href: '#grandchild2',
+                                    tags: ['3']
+                                },
+                                {
+                                    text: 'Peanut',
+                                    href: '#grandchild2',
+                                    tags: ['3']
+                                },
+                                {
+                                    text: 'Pigeon pea',
+                                    href: '#grandchild2',
+                                    tags: ['3']
+                                },
+                                {
+                                    text: 'Sybean',
+                                    href: '#grandchild2',
+                                    tags: ['3']
+                                },
+                                {
+                                    text: 'Velvet Bean',
+                                    href: '#grandchild2',
+                                    tags: ['3']
+                                }
+                            ]
+                        },
+                        {
+                            text: 'Root Crops',
+                            href: '#child2',
+                            tags: ['4'],
+                            nodes: [
+                                {
+                                    text: 'Cassava',
+                                    href: '#grandchild1',
+                                    tags: ['4']
+                                },
+                                {
+                                    text: 'Potato',
+                                    href: '#grandchild2',
+                                    tags: ['4']
+                                },
+                                {
+                                    text: 'Tanier',
+                                    href: '#grandchild2',
+                                    tags: ['4']
+                                },
+                                {
+                                    text: 'Taro',
+                                    href: '#grandchild2',
+                                    tags: ['4']
+                                }
+                            ]
+                        },
+                        {
+                            text: 'Oil Crops',
+                            href: '#child2',
+                            tags: ['5'],
+                            nodes: [
+                                {
+                                    text: 'Canola',
+                                    href: '#grandchild1',
+                                    tags: ['5']
+                                },
+                                {
+                                    text: 'Saffower',
+                                    href: '#grandchild2',
+                                    tags: ['5']
+                                },
+                                {
+                                    text: 'Sunflower',
+                                    href: '#grandchild2',
+                                    tags: ['5']
+                                }
+                            ]
+                        },
+                        {
+                            text: 'Vegetables',
+                            href: '#child2',
+                            tags: ['6'],
+                            nodes: [
+                                {
+                                    text: 'Pepper',
+                                    href: '#grandchild1',
+                                    tags: ['6']
+                                },
+                                {
+                                    text: 'Cabbage',
+                                    href: '#grandchild2',
+                                    tags: ['6']
+                                },
+                                {
+                                    text: 'Tomato',
+                                    href: '#grandchild2',
+                                    tags: ['6']
+                                },
+                                {
+                                    text: 'Sweetcorn',
+                                    href: '#grandchild2',
+                                    tags: ['6']
+                                },
+                                {
+                                    text: 'Gren Bean',
+                                    href: '#grandchild2',
+                                    tags: ['6']
+                                }
+                            ]
+                        },
+                        {
+                            text: 'Fiber',
+                            href: '#child2',
+                            tags: ['7'],
+                            nodes: [
+                                {
+                                    text: 'Cotton',
+                                    href: '#grandchild1',
+                                    tags: ['7']
+                                }
+                            ]
+                        },
+                        {
+                            text: 'Forages',
+                            href: '#child2',
+                            tags: ['8'],
+                            nodes: [
+                                {
+                                    text: 'Alfalfa',
+                                    href: '#grandchild1',
+                                    tags: ['8']
+                                },
+                                {
+                                    text: 'Bahia Grass',
+                                    href: '#grandchild1',
+                                    tags: ['8']
+                                },
+                                {
+                                    text: 'Bermuda Grass',
+                                    href: '#grandchild1',
+                                    tags: ['8']
+                                },
+                                {
+                                    text: 'Brachiaria',
+                                    href: '#grandchild1',
+                                    tags: ['8']
+                                }
+                            ]
+                        },
+                        {
+                            text: 'Sugar/Energy',
+                            href: '#child2',
+                            tags: ['9'],
+                            nodes: [
+                                {
+                                    text: 'Sugarcane',
+                                    href: '#grandchild1',
+                                    tags: ['9']
+                                }
+                            ]
+                        },
+                        {
+                            text: 'Fruit Crops',
+                            href: '#child2',
+                            tags: ['10'],
+                            nodes: [
+                                {
+                                    text: 'Pineapple',
+                                    href: '#grandchild1',
+                                    tags: ['10']
+                                }
+                            ]
+                        },
+                        {
+                            text: 'Variuos',
+                            href: '#child2',
+                            tags: ['11'],
+                            nodes: [
+                                {
+                                    text: 'Fallow',
+                                    href: '#grandchild1',
+                                    tags: ['11']
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ];
+
+
+
+            return defaultData;
+        }
+
+        jQuery(function ($) {
+            $('#tree').treeview({
+                data: getTree(),
+                levels: 11
+
+            });
+        });
+
+    </script>
+</body>
+
+</html>
