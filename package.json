@@ -20,6 +20,8 @@
   },
   "homepage": "https://github.com/jabreuar/dssat-web#readme",
   "dependencies": {
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "node-run-cmd": "^1.0.1",
+    "mac-open": "^0.1.3"
   }
 }

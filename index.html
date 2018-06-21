@@ -19,7 +19,7 @@
     <link href="css/style.css" rel="stylesheet">
     <!-- You can change the theme colors from here -->
     <link href="css/colors/blue.css" id="theme" rel="stylesheet">
-
+    <link rel="stylesheet" href="./js/multiple-select/multiple-select.css" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -151,7 +151,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" data-toggle="tab" href="#experiments" role="tab">
+                                        <a class="nav-link" data-toggle="tab" href="#experiments" role="tab" id="tabExperiments">
                                             <span class="hidden-sm-up">
                                                 <i class="ti-user"></i>
                                             </span>
@@ -159,7 +159,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" data-toggle="tab" href="#treatments" role="tab">
+                                        <a class="nav-link" data-toggle="tab" href="#treatments" role="tab" id="tabTreatments">
                                             <span class="hidden-sm-up">
                                                 <i class="ti-email"></i>
                                             </span>
@@ -167,7 +167,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" data-toggle="tab" href="#outputs" role="tab">
+                                        <a class="nav-link" data-toggle="tab" href="#outputs" role="tab" id="tabModelOutputs">
                                             <span class="hidden-sm-up">
                                                 <i class="ti-email"></i>
                                             </span>
@@ -370,7 +370,7 @@
                                                     </a>
                                                 </li>
                                                 <li class="nav-item">
-                                                    <a class="nav-link" data-toggle="tab" href="#data" role="tab" aria-selected="false">
+                                                    <a class="nav-link" data-toggle="tab" href="#data" role="tab" aria-selected="false" id="tabData">
                                                         <span class="hidden-sm-up">
                                                             <i class="ti-user"></i>
                                                         </span>
@@ -378,7 +378,7 @@
                                                     </a>
                                                 </li>
                                                 <li class="nav-item">
-                                                    <a class="nav-link" data-toggle="tab" href="#output" role="tab" aria-selected="false">
+                                                    <a class="nav-link" data-toggle="tab" href="#output" role="tab" aria-selected="false" id="tabOutput">
                                                         <span class="hidden-sm-up">
                                                             <i class="ti-email"></i>
                                                         </span>
@@ -391,7 +391,7 @@
                                                 <div class="tab-pane active show" id="experiments" role="tabpanel">
                                                     <div class="panel panel-default">
                                                         <div class="panel-body">
-                                                            <table id="tblExperiments" class="table table-bordered table-hover">
+                                                            <table id="tblExperiments" class="table color-table success-table">
                                                                 <thead>
                                                                     <tr>
                                                                         <th class="center"></th>
@@ -415,7 +415,7 @@
                                                 <div class="tab-pane p-20" id="data" role="tabpanel">
                                                     <div class="panel panel-default">
                                                         <div class="panel-body">
-                                                            <table id="tblDataContent" class="table table-bordered table-hover">
+                                                            <table id="tblDataContent" class="table color-table success-table">
                                                                 <thead>
                                                                     <tr>
                                                                         <th class="detail-col">Experimental Data</th>
@@ -438,7 +438,7 @@
                                                 <div class="tab-pane p-20" id="output" role="tabpanel">
                                                     <div class="panel panel-default">
                                                         <div class="panel-body">
-                                                            <table id="tblModelOutputFiles" class="table table-bordered table-hover">
+                                                            <table id="tblModelOutputFiles" class="table color-table success-table">
                                                                 <thead>
                                                                     <tr>
                                                                         <th class="detail-col">Model Output Files</th>
@@ -471,15 +471,15 @@
                                         </div>
                                     </div>
                                     <div class="tab-pane p-20" id="treatments" role="tabpanel">
-                                        <table id="tblTreatments" class="table  table-bordered table-hover">
+                                        <button type="button" class="btn btn-sm btn-success" id="btnRunSimulation">
+                                            <i class="fa fa-bolt" aria-hidden="true"></i> Run Simulation
+                                        </button>
+                                        <br />
+                                        <br />
+                                        <table id="tblTreatments" class="table color-table success-table">
                                             <thead>
                                                 <tr>
-                                                    <th class="center" style="width: 5%">
-                                                        <label class="pos-rel">
-                                                            <input type="checkbox" class="ace" />
-                                                            <span class="lbl"></span>
-                                                        </label>
-                                                    </th>
+                                                    <th class="center" style="width: 5%"></th>
                                                     <th class="center" style="width: 5%">#</th>
                                                     <th class="center">Treatment</th>
                                                     <th class="center">Experiment</th>
@@ -490,7 +490,7 @@
                                         </table>
                                     </div>
                                     <div class="tab-pane p-20" id="outputs" role="tabpanel">
-                                        <table id="tblOutputs" class="table table-bordered table-hover">
+                                        <table id="tblOutputs" class="table color-table success-table">
                                             <thead>
                                                 <tr>
                                                     <th class="center" style="width: 10%" colspan="2">Actions</th>
@@ -569,6 +569,75 @@
                         </div>
                     </div>
                 </div>
+                <!-- Modal -->
+                <div class="modal fade" id="chartModal" role="dialog">
+                    <div class="modal-dialog modal-lg" style="width: 70%; height: 70%">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">
+                                    <i class="ace-icon fa fa-bar-chart-o"></i> Graph Builder
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <div id="plotlyDiv">
+                                    <!-- Plotly chart will be drawn inside this DIV -->
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">Files</div>
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label id="lblFileSelectedGraphBuilder"></label>
+                                                    </div>
+                                                    <div>
+                                                        <!-- Single button -->
+                                                        <label for="ddAvailableFiles">Available: </label>
+                                                        <select class="dropdown" id="ddAvailableFiles">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title">Variables (Y Value)</h3>
+                                            </div>
+                                            <div class="panel-body">
+                                                <select multiple="multiple" id="yVariables"></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title">Runs</h3>
+                                            </div>
+                                            <div class="panel-body">
+                                                <select multiple="multiple" id="runs">
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary btn-default" id="btnPlotChart">
+                                    <i class="fa fa-area-chart" aria-hidden="true"></i>Refresh</button>
+                                <button type="button" class="btn btn-info" id="btnDownload" disabled>
+                                    <i class="fa fa-download" aria-hidden="true"></i>Download</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!-- ============================================================== -->
                 <!-- End Right sidebar -->
                 <!-- ============================================================== -->
@@ -630,277 +699,345 @@
     <!-- Treeview Plugin JavaScript -->
     <script src="./js/bootstrap-treeview.js"></script>
 
+    <!-- Load multiselect -->
+    <script src="./js/multiple-select/multiple-select.js"></script>
 
-    <!-- ============================================================== -->
-    <!-- DSSAT -->
-    <!-- ============================================================== -->
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
     <script type="text/javascript">
+        function loadAvailableFiles(path) {
 
-        function getTree() {
+            $("#ddAvailableFiles").empty();
+            let availableFiles = $("#ddAvailableFiles");
 
-            let defaultData = [
-                {
-                    text: 'Crops',
-                    href: '#parent1',
-                    tags: ['11'],
-                    nodes: [
-                        {
-                            text: 'Cereals',
-                            href: '#child1',
-                            tags: ['2'],
-                            nodes: [
-                                {
-                                    text: 'Barley',
-                                    href: '#grandchild1',
-                                    tags: ['2']
-                                },
-                                {
-                                    text: 'Maize',
-                                    href: '#grandchild2',
-                                    tags: ['2']
-                                },
-                                {
-                                    text: 'Pearl Millet',
-                                    href: '#grandchild2',
-                                    tags: ['2']
-                                },
-                                {
-                                    text: 'Rice',
-                                    href: '#grandchild2',
-                                    tags: ['2']
-                                },
-                                {
-                                    text: 'Grain Sorghum',
-                                    href: '#grandchild2',
-                                    tags: ['2']
-                                },
-                                {
-                                    text: 'Wheat',
-                                    href: '#grandchild2',
-                                    tags: ['2']
-                                }
-                            ]
-                        },
-                        {
-                            text: 'Legumes',
-                            href: '#child2',
-                            tags: ['3'],
-                            nodes: [
-                                {
-                                    text: 'Chikpea',
-                                    href: '#grandchild1',
-                                    tags: ['3']
-                                },
-                                {
-                                    text: 'Cowpea',
-                                    href: '#grandchild2',
-                                    tags: ['3']
-                                },
-                                {
-                                    text: 'Dry bean',
-                                    href: '#grandchild2',
-                                    tags: ['3']
-                                },
-                                {
-                                    text: 'Faba Bean',
-                                    href: '#grandchild2',
-                                    tags: ['3']
-                                },
-                                {
-                                    text: 'Peanut',
-                                    href: '#grandchild2',
-                                    tags: ['3']
-                                },
-                                {
-                                    text: 'Pigeon pea',
-                                    href: '#grandchild2',
-                                    tags: ['3']
-                                },
-                                {
-                                    text: 'Sybean',
-                                    href: '#grandchild2',
-                                    tags: ['3']
-                                },
-                                {
-                                    text: 'Velvet Bean',
-                                    href: '#grandchild2',
-                                    tags: ['3']
-                                }
-                            ]
-                        },
-                        {
-                            text: 'Root Crops',
-                            href: '#child2',
-                            tags: ['4'],
-                            nodes: [
-                                {
-                                    text: 'Cassava',
-                                    href: '#grandchild1',
-                                    tags: ['4']
-                                },
-                                {
-                                    text: 'Potato',
-                                    href: '#grandchild2',
-                                    tags: ['4']
-                                },
-                                {
-                                    text: 'Tanier',
-                                    href: '#grandchild2',
-                                    tags: ['4']
-                                },
-                                {
-                                    text: 'Taro',
-                                    href: '#grandchild2',
-                                    tags: ['4']
-                                }
-                            ]
-                        },
-                        {
-                            text: 'Oil Crops',
-                            href: '#child2',
-                            tags: ['5'],
-                            nodes: [
-                                {
-                                    text: 'Canola',
-                                    href: '#grandchild1',
-                                    tags: ['5']
-                                },
-                                {
-                                    text: 'Saffower',
-                                    href: '#grandchild2',
-                                    tags: ['5']
-                                },
-                                {
-                                    text: 'Sunflower',
-                                    href: '#grandchild2',
-                                    tags: ['5']
-                                }
-                            ]
-                        },
-                        {
-                            text: 'Vegetables',
-                            href: '#child2',
-                            tags: ['6'],
-                            nodes: [
-                                {
-                                    text: 'Pepper',
-                                    href: '#grandchild1',
-                                    tags: ['6']
-                                },
-                                {
-                                    text: 'Cabbage',
-                                    href: '#grandchild2',
-                                    tags: ['6']
-                                },
-                                {
-                                    text: 'Tomato',
-                                    href: '#grandchild2',
-                                    tags: ['6']
-                                },
-                                {
-                                    text: 'Sweetcorn',
-                                    href: '#grandchild2',
-                                    tags: ['6']
-                                },
-                                {
-                                    text: 'Gren Bean',
-                                    href: '#grandchild2',
-                                    tags: ['6']
-                                }
-                            ]
-                        },
-                        {
-                            text: 'Fiber',
-                            href: '#child2',
-                            tags: ['7'],
-                            nodes: [
-                                {
-                                    text: 'Cotton',
-                                    href: '#grandchild1',
-                                    tags: ['7']
-                                }
-                            ]
-                        },
-                        {
-                            text: 'Forages',
-                            href: '#child2',
-                            tags: ['8'],
-                            nodes: [
-                                {
-                                    text: 'Alfalfa',
-                                    href: '#grandchild1',
-                                    tags: ['8']
-                                },
-                                {
-                                    text: 'Bahia Grass',
-                                    href: '#grandchild1',
-                                    tags: ['8']
-                                },
-                                {
-                                    text: 'Bermuda Grass',
-                                    href: '#grandchild1',
-                                    tags: ['8']
-                                },
-                                {
-                                    text: 'Brachiaria',
-                                    href: '#grandchild1',
-                                    tags: ['8']
-                                }
-                            ]
-                        },
-                        {
-                            text: 'Sugar/Energy',
-                            href: '#child2',
-                            tags: ['9'],
-                            nodes: [
-                                {
-                                    text: 'Sugarcane',
-                                    href: '#grandchild1',
-                                    tags: ['9']
-                                }
-                            ]
-                        },
-                        {
-                            text: 'Fruit Crops',
-                            href: '#child2',
-                            tags: ['10'],
-                            nodes: [
-                                {
-                                    text: 'Pineapple',
-                                    href: '#grandchild1',
-                                    tags: ['10']
-                                }
-                            ]
-                        },
-                        {
-                            text: 'Variuos',
-                            href: '#child2',
-                            tags: ['11'],
-                            nodes: [
-                                {
-                                    text: 'Fallow',
-                                    href: '#grandchild1',
-                                    tags: ['11']
-                                }
-                            ]
-                        }
-                    ]
+            $.get("http://localhost:3000/api/outFiles/Maize").done(function (data) {
+                let outFiles = JSON.parse(data);
+                for (let i = 0; i < outFiles.length; i++) {
+                    let item = `<option value="${outFiles[i]}">${outFiles[i]}</option>`;
+                    availableFiles.append(item);
                 }
-            ];
+            });
 
 
+        }
+        function loadChartBuilder(outFile, openModal) {
 
-            return defaultData;
+            $.get("http://localhost:3000/api/out/Maize/PlantGro.OUT").done(function (data) {
+
+                var dataFiles = JSON.parse(data);
+
+                let table = $("#tblExperiments");
+                $("#tblExperiments > tbody").empty();
+                $("#tblTreatments > tbody").empty();
+
+                let tblDataContent = $('#tblDataContent');
+
+                $("#tblDataContent > tbody").empty();
+
+                for (let i = 0; i < dataFiles.length; i++) {
+                    let tr = `<tr onclick="openPreviewInExperiments('${dataFiles[i]}')">`;
+                    tr += `<td><input type="checkbox" class="filled-in" id="${dataFiles[i]}" value="${dataFiles[i]}">${dataFiles[i]}</input></td>`;
+                    tr += "</tr>";
+                    tblDataContent.append(tr);
+                }
+            });
+            let out = null;
+            $.get("http://localhost:3000/api/out/Maize/PlantGro.OUT").done(function (data) {
+                let out = JSON.parse(data);
+            });
+            let cde = null;
+            $.get("http://localhost:3000/api/cde").done(function (data) {
+                cde = JSON.parse(data);
+            });
+
+            loadAvailableFiles("Maize");
+
+            var selectRun = $("#runs");
+            selectRun.multipleSelect("uncheckAll");
+            selectRun.empty();
+            for (let g = 0; g < out.length; g++) {
+                var el = "<option value='" + out[g].run + "'>" + out[g].run + "</option>";
+                selectRun.append(el).multipleSelect("refresh");
+            }
+            selectRun.multipleSelect("enable");
+
+            var ySelectVariables = $("#yVariables");
+            ySelectVariables.multipleSelect("uncheckAll");
+            ySelectVariables.empty();
+            for (let h = 0; h < out[0].values.length; h++) {
+                let cdeObj = cde.filter(function (item) {
+                    if (item.cde.toString().trim() == out[0].values[h].cde.toString().trim()) {
+                        return item;
+                    }
+                });
+
+                if (cdeObj[0] !== undefined) {
+                    let el = "<option value='" + out[0].values[h].cde + "'>" + cdeObj[0].description.trim() + "(" + out[0].values[h].cde + ")" + "</option>";
+                    ySelectVariables.append(el).multipleSelect("refresh");
+                }
+            }
+            ySelectVariables.multipleSelect("enable");
+
+            outResult = out;
+            outFileSelected = outFile;
+
+            let selectedFileText = "Selected: " + outFile;
+
+            $("#lblFileSelectedGraphBuilder").empty();
+            $("#lblFileSelectedGraphBuilder").text(selectedFileText);
+
+            if (openModal) {
+                $("#chartModal").modal();
+            }
         }
 
         jQuery(function ($) {
-            $('#tree').treeview({
-                data: getTree(),
-                levels: 11
 
+            function plotChart(runs, yVariable) {
+
+                let cde = [];
+                $.get("http://localhost:3000/api/cde").done(function (data) {
+                    cde = JSON.parse(data);
+                });
+                let partPath = "Maize";
+                if (runs.length <= 0 || yVariable.length <= 0) {
+                    alert("Select variable to plot a chart");
+                } else {
+                    let columns = [];
+                    let line = [];
+                    let ploty = [];
+                    // read out file
+                    for (let x = 0; x < listOfDataToPlot.length; x++) {
+                        let fileName = listOfDataToPlot[x].name;
+                        let yVariables = listOfDataToPlot[x].variables;
+                        let outFileResult = null;
+                        $.get("http://localhost:3000/api/out/Maize/PlantGro.OUT").done(function (data) {
+                            outFileResult = JSON.parse(data);
+                        });
+
+                        for (let i = 0; i < runs.length; i++) {
+                            let values = outFileResult.filter(function (item) {
+                                if (item.run == runs[i]) return item.values;
+                            });
+                            for (let j = 0; j < yVariables.length; j++) {
+                                for (let h = 0; h < values.length; h++) {
+                                    if (values[h].run === runs[i]) {
+                                        values[h].values.forEach(element => {
+                                            if (element.cde == yVariables[j]) {
+                                                // get variable description
+                                                let cdeObj = cde.filter(function (item) {
+                                                    if (item.cde.toString().trim() == element.cde.toString().trim()) {
+                                                        return item;
+                                                    }
+                                                });
+                                                let legend = cdeObj[0].description.trim() + " (" + runs[i] + ")";
+                                                let plotValues = {
+                                                    'variable': cdeObj[0].description,
+                                                    'values': element.values
+                                                }
+                                                ploty.push(plotValues);
+                                                line = [legend].concat(element.values);
+                                                columns.push(line);
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    let arrayDap = [];
+                    outResult[0].values.forEach(element => {
+                        if (element.cde == "DAS") {
+                            //arrayDap = ['x'].concat(element.values);
+                            arrayDap.push(element.values);
+                        }
+                    });
+                    columns.push(arrayDap);
+                    let dap = [];
+                    let c = [];
+                    var data = [];
+                    for (let i = 0; i < arrayDap[0].length; i++) {
+                        dap.push(parseInt(i));
+                    }
+                    for (let i = 0; i < ploty.length; i++) {
+                        let values = [];
+                        for (let j = 0; j < ploty[i].values.length; j++) {
+                            let val = parseInt(ploty[i].values[j]);
+                            values.push(val);
+                        }
+                        let plotMode = $('#ddPlotType').val();
+                        let trace = {
+                            x: dap,
+                            y: values,
+                            mode: plotMode,
+                            name: ploty[i].variable.trim(),
+                        };
+                        data.push(trace);
+                    }
+                    Plotly.newPlot('plotlyDiv', data);
+                }
+            }
+            $("#btnPlotChart").click(function () {
+                let runs = $('#runs').multipleSelect('getSelects');
+                let yVariable = $('#yVariables').multipleSelect('getSelects');
+                plotChart(runs, yVariable);
             });
+
+            $("#tabExperiments").click(function () {
+                $.get("http://localhost:3000/api/experiments/Maize").done(function (data) {
+
+                    var experiments = JSON.parse(data);
+
+                    let table = $("#tblExperiments");
+                    $("#tblExperiments > tbody").empty();
+                    $("#tblTreatments > tbody").empty();
+
+                    experiments.forEach(function (element) {
+                        let tr = `<tr onclick="openPreviewInExperiments('${element.name}')">`;
+                        tr += `<td><input type=\"checkbox\" class=\"filled-in\" name=\"${element.name}\" value=\"${element.name}\" /></input></td>`;
+                        tr += `<td>${element.number}</td>`;
+                        tr += `<td id="${element.name}">${element.name}</td>`;
+                        tr += `<td>${element.description}</td>`;
+                        tr += `<td>${element.modified}</td>`;
+                        tr += "</tr>";
+                        table.append(tr);
+                    }, this);
+                });
+            });
+
+            $("#tabData").click(function () {
+
+                $.get("http://localhost:3000/api/data/Maize").done(function (data) {
+
+                    var dataFiles = JSON.parse(data);
+
+                    let table = $("#tblExperiments");
+                    $("#tblExperiments > tbody").empty();
+                    $("#tblTreatments > tbody").empty();
+
+                    let tblDataContent = $('#tblDataContent');
+
+                    $("#tblDataContent > tbody").empty();
+
+                    for (let i = 0; i < dataFiles.length; i++) {
+                        let tr = `<tr onclick="openPreviewInExperiments('${dataFiles[i]}')">`;
+                        tr += `<td><input type="checkbox" class="filled-in" id="${dataFiles[i]}" value="${dataFiles[i]}">${dataFiles[i]}</input></td>`;
+                        tr += "</tr>";
+                        tblDataContent.append(tr);
+                    }
+                });
+            });
+
+            $("#tabOutput").click(function () {
+
+                $.get("http://localhost:3000/api/outFiles/Maize").done(function (data) {
+
+                    let outFiles = JSON.parse(data);
+
+                    let tblOutFiles = $('#tblModelOutputFiles');
+
+                    $("#tblModelOutputFiles > tbody").empty();
+
+                    for (let i = 0; i < outFiles.length; i++) {
+                        let tr = `<tr onclick="openPreviewInExperiments('${outFiles[i]}')">`;
+                        tr += `<td>${outFiles[i]}</td>`;
+                        tr += "</tr>";
+                        tblOutFiles.append(tr);
+                    }
+                });
+            });
+
+            $("#tabTreatments").click(function () {
+                loadTreatments();
+            });
+
+            $("#btnRunSimulation").click(function () {
+
+                let experimentsSelected = [];
+                $('#tblTreatments > tbody').find('input[type="checkbox"]:checked').each(function () {
+                    let treatments = $(this).attr('treatments').split('|');
+
+                    if (treatments.length >= 2) {
+                        let obj = { trtNo: treatments[0], experiment: treatments[1], treatment: treatments[2] };
+                        experimentsSelected.push(obj);
+                    }
+                });
+
+                if (experimentsSelected <= 0) alert("Please select a treatment");
+
+                else {
+                    let experimentsJson = JSON.stringify(experimentsSelected);
+                    let url = `http://localhost:3000/api/runSimulation/Maize/${experimentsJson}`;
+
+                    $.get(url).done(function (data) {
+                        alert(data);
+                    })
+                        .fail(function () {
+                            alert("error happened");
+                        })
+                }
+            });
+
+            $("#tabModelOutputs").click(function () {
+                let url = `http://localhost:3000/api/outFiles/Maize`;
+
+                $.get(url).done(function (data) {
+                    let outFiles = JSON.parse(data);
+
+                    let tableOutput = $("#tblOutputs");
+                    $("#tblOutputs > tbody").empty();
+                    for (let i = 0; i < outFiles.length; i++) {
+                        let tr = "<tr>";
+                        tr += `<td></td>`;
+                        tr += `<td><button class="btn btn-xs btn-success" onclick="loadChartBuilder('${outFiles[i]}', true)"><i class="fas fa-chart-area" aria-hidden="true"></i></button></td>`;
+                        tr += `<td>${outFiles[i]}</td>`;
+                        tr += "</tr>";
+                        tableOutput.append(tr);
+                    }
+                })
+                    .fail(function () {
+                        alert("error happened");
+                    })
+            });
+
         });
+
+        function loadTreatments() {
+
+            let experimentsSelected = [];
+            $('#tblExperiments > tbody').find('input[type="checkbox"]:checked').each(function () {
+                experimentsSelected.push(this.name);
+            });
+            console.log(experimentsSelected);
+
+            let experimentsJson = JSON.stringify(experimentsSelected);
+
+            let url = `http://localhost:3000/api/treatments/Maize/${experimentsJson}`;
+
+            $.get(url).done(function (data) {
+
+                var treatments = JSON.parse(data);
+
+                let table = $("#tblTreatments");
+
+                $("#tblTreatments > tbody").empty();
+
+                for (let i = 0; i < treatments.length; i++) {
+
+                    let treatObj = treatments[i].trtNo + "|" + treatments[i].experiment + "|" + treatments[i].treatment;
+
+                    let tr = "<tr>";
+                    tr += `<td><input type=\"checkbox\" class=\"filled-in\" treatments="${treatObj}"></input></td>`;
+                    tr += `<td>${treatments[i].trtNo}</td>`;
+                    tr += `<td>${treatments[i].treatment}</td>`;
+                    tr += `<td>${treatments[i].experiment}</td>`;
+                    tr += "</tr>";
+
+                    table.append(tr);
+                }
+            });
+        }
 
     </script>
 </body>
