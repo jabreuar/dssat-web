@@ -8,10 +8,9 @@ const app = express()
 app.use(express.static(__dirname + '/node_modules/'))
 app.use(express.static(__dirname + '/assets/'))
 
-app.use((request, res, next) => {
+app.use((res) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next()
 })
 
 app.get('/api/treatments/:crop/:experiments', (request, response) => {
