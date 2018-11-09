@@ -191,9 +191,11 @@
                                                             <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(112px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
                                                                 <a class="dropdown-item" href="#" onclick="setCrop('Barley')">Barley</a>
                                                                 <a class="dropdown-item" href="#" onclick="setCrop('Maize')">Maize</a>
-                                                                <a class="dropdown-item" href="#" onclick="setCrop('Pearl Millet')">Pearl Millet</a>
+                                                                <a class="dropdown-item" href="#" onclick="setCrop('Pearl Millet')">Pearl
+                                                                    Millet</a>
                                                                 <a class="dropdown-item" href="#" onclick="setCrop('Rice')">Rice</a>
-                                                                <a class="dropdown-item" href="#" onclick="setCrop('Grain Sorghum')">Grain Sorghum</a>
+                                                                <a class="dropdown-item" href="#" onclick="setCrop('Grain Sorghum')">Grain
+                                                                    Sorghum</a>
                                                                 <a class="dropdown-item" href="#" onclick="setCrop('Wheat')">Wheat</a>
                                                             </div>
                                                         </div>
@@ -211,12 +213,16 @@
                                                             <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(112px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
                                                                 <a class="dropdown-item" href="#" onclick="setCrop('Chickpea')">Chickpea</a>
                                                                 <a class="dropdown-item" href="#" onclick="setCrop('Cowpea')">Cowpea</a>
-                                                                <a class="dropdown-item" href="#" onclick="setCrop('Dry Bean')">Dry Bean</a>
-                                                                <a class="dropdown-item" href="#" onclick="setCrop('Faba Bean')">Faba Bean</a>
+                                                                <a class="dropdown-item" href="#" onclick="setCrop('Dry Bean')">Dry
+                                                                    Bean</a>
+                                                                <a class="dropdown-item" href="#" onclick="setCrop('Faba Bean')">Faba
+                                                                    Bean</a>
                                                                 <a class="dropdown-item" href="#" onclick="setCrop('Peanut')">Peanut</a>
-                                                                <a class="dropdown-item" href="#" onclick="setCrop('Pigeon Pea')">Pigeon Pea</a>
+                                                                <a class="dropdown-item" href="#" onclick="setCrop('Pigeon Pea')">Pigeon
+                                                                    Pea</a>
                                                                 <a class="dropdown-item" href="#" onclick="setCrop('Soybean')">Soybean</a>
-                                                                <a class="dropdown-item" href="#" onclick="setCrop('Velvet Bean')">Velvet Bean</a>
+                                                                <a class="dropdown-item" href="#" onclick="setCrop('Velvet Bean')">Velvet
+                                                                    Bean</a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -270,7 +276,8 @@
                                                                 <a class="dropdown-item" href="#" onclick="setCrop('Cabbage')">Cabbage</a>
                                                                 <a class="dropdown-item" href="#" onclick="setCrop('Tomato')">Tomato</a>
                                                                 <a class="dropdown-item" href="#" onclick="setCrop('Sweetcorn')">Sweetcorn</a>
-                                                                <a class="dropdown-item" href="#" onclick="setCrop('Green Bean')">Green Bean</a>
+                                                                <a class="dropdown-item" href="#" onclick="setCrop('Green Bean')">Green
+                                                                    Bean</a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -301,8 +308,10 @@
                                                             </button>
                                                             <div class="dropdown-menu" x-placement="right-start" style="position: absolute; transform: translate3d(112px, 0px, 0px); top: 0px; left: 0px; will-change: transform;">
                                                                 <a class="dropdown-item" href="#" onclick="setCrop('Alfalfa')">Alfalfa</a>
-                                                                <a class="dropdown-item" href="#" onclick="setCrop('Bahia Grass')">Bahia Grass</a>
-                                                                <a class="dropdown-item" href="#" onclick="setCrop('Bermuda Grass')">Bermuda Grass</a>
+                                                                <a class="dropdown-item" href="#" onclick="setCrop('Bahia Grass')">Bahia
+                                                                    Grass</a>
+                                                                <a class="dropdown-item" href="#" onclick="setCrop('Bermuda Grass')">Bermuda
+                                                                    Grass</a>
                                                                 <a class="dropdown-item" href="#" onclick="setCrop('Brachiaria')">Brachiaria</a>
                                                             </div>
                                                         </div>
@@ -571,9 +580,9 @@
                 </div>
                 <!-- Modal -->
                 <div class="modal fade" id="chartModal" role="dialog">
-                    <div class="modal-dialog modal-lg" style="width: 70%; height: 70%">
+                    <div class="modal-dialog modal-lg">
                         <!-- Modal content-->
-                        <div class="modal-content">
+                        <div class="modal-content" style="min-width: 1000px;">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 <h4 class="modal-title">
@@ -590,13 +599,30 @@
                                             <div class="panel-heading">Files</div>
                                             <div class="panel-body">
                                                 <div class="row">
-                                                    <div class="col-md-6">
-                                                        <label id="lblFileSelectedGraphBuilder"></label>
-                                                    </div>
                                                     <div>
                                                         <!-- Single button -->
                                                         <label for="ddAvailableFiles">Available: </label>
                                                         <select class="dropdown" id="ddAvailableFiles">
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">Configurations</div>
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label id="lblModeSelectedGraphBuilder"></label>
+                                                    </div>
+                                                    <div>
+                                                        <label for="ddPlotType">Plot Mode:</label>
+                                                        <select class="dropdown" id="ddPlotType">
+                                                            <option value="lines">Lines</option>
+                                                            <option value="markers">Markers</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -638,26 +664,27 @@
                         </div>
                     </div>
                 </div>
-                <!-- ============================================================== -->
-                <!-- End Right sidebar -->
-                <!-- ============================================================== -->
             </div>
             <!-- ============================================================== -->
-            <!-- End Container fluid  -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- footer -->
-            <!-- ============================================================== -->
-            <footer class="footer">
-                © 2018 DSSAT
-            </footer>
-            <!-- ============================================================== -->
-            <!-- End footer -->
+            <!-- End Right sidebar -->
             <!-- ============================================================== -->
         </div>
         <!-- ============================================================== -->
-        <!-- End Page wrapper  -->
+        <!-- End Container fluid  -->
         <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- footer -->
+        <!-- ============================================================== -->
+        <footer class="footer">
+            © 2018 DSSAT
+        </footer>
+        <!-- ============================================================== -->
+        <!-- End footer -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Page wrapper  -->
+    <!-- ============================================================== -->
     </div>
     <!-- ============================================================== -->
     <!-- End Wrapper -->
@@ -707,11 +734,23 @@
 
     <script type="text/javascript">
 
+        /*socket = new WebSocket('ws://127.0.0.1:1003');
+        socket.onopen = function () {
+            socket.send('hello');
+        };
+        socket.onmessage = function (s) {
+            alert('got reply ' + s);
+        };*/
+
         var listOfDataToPlot = [];
         var cropSelected = "";
-
+        //var fqdn = "http://fba5cadc.ngrok.io";
+        var fqdn = "http://localhost:3000";
+        
         function setCrop(crop) {
             cropSelected = crop;
+
+            $("#tabExperiments").trigger('click');
         }
 
         function loadAvailableFiles(path) {
@@ -719,16 +758,14 @@
             $("#ddAvailableFiles").empty();
             let availableFiles = $("#ddAvailableFiles");
 
-            //$.get(`http://997e86c2.ngrok.io/api/outFiles/${cropSelected}`).done(function (data) {
-            let outfilesResponse = httpGet(`http://997e86c2.ngrok.io/api/outFiles/${cropSelected}`)
+            let outfilesResponse = httpGet(`${fqdn}/api/outFiles/${cropSelected}`)
             let outFiles = JSON.parse(outfilesResponse);
             for (let i = 0; i < outFiles.length; i++) {
                 let item = `<option value="${outFiles[i]}">${outFiles[i]}</option>`;
                 availableFiles.append(item);
             }
-            //});
 
-
+            $(availableFiles).val(outFileSelected)/
         }
 
         function setSelectedVariables() {
@@ -744,9 +781,7 @@
 
         function loadChartBuilder(outFile, openModal) {
 
-            //$.get(`http://997e86c2.ngrok.io/api/out/${cropSelected}/PlantGro.OUT`).done(function (data) {
-
-            let datafilesResponse = httpGet(`http://997e86c2.ngrok.io/api/out/${cropSelected}/PlantGro.OUT`);
+            let datafilesResponse = httpGet(`${fqdn}/api/out/${cropSelected}/PlantGro.OUT`);
 
             var dataFiles = JSON.parse(datafilesResponse);
 
@@ -765,15 +800,11 @@
                 tblDataContent.append(tr);
             }
 
-            //$.get(`http://997e86c2.ngrok.io/api/out/${cropSelected}/PlantGro.OUT`).done(function (data) {
-
-            let outresponse = httpGet(`http://997e86c2.ngrok.io/api/out/${cropSelected}/PlantGro.OUT`);
+            let outresponse = httpGet(`${fqdn}/api/out/${cropSelected}/PlantGro.OUT`);
 
             let out = JSON.parse(outresponse);
 
-            //$.get("http://997e86c2.ngrok.io/api/cde").done(function (data) {
-
-            let cderesponse = httpGet("http://997e86c2.ngrok.io/api/cde");
+            let cderesponse = httpGet(`${fqdn}/api/cde`);
             let cde = JSON.parse(cderesponse);
 
             loadAvailableFiles(cropSelected);
@@ -807,17 +838,10 @@
             outResult = out;
             outFileSelected = outFile;
 
-            let selectedFileText = "Selected: " + outFile;
-
-            $("#lblFileSelectedGraphBuilder").empty();
-            $("#lblFileSelectedGraphBuilder").text(selectedFileText);
 
             if (openModal) {
                 $("#chartModal").modal();
             }
-            //});
-            //});
-            //});
         }
 
         function httpGet(uri) {
@@ -855,12 +879,7 @@
 
             function plotChart(runs, yVariable) {
 
-                /*let cde = [];
-                $.get("http://997e86c2.ngrok.io/api/cde").done(function (data) {
-                    cde = JSON.parse(data);
-                });*/
-
-                let cderesponse = httpGet("http://997e86c2.ngrok.io/api/cde");
+                let cderesponse = httpGet(`${fqdn}/api/cde`);
                 let cde = JSON.parse(cderesponse);
 
                 let partPath = "Maize";
@@ -875,9 +894,7 @@
                         let fileName = listOfDataToPlot[x].name;
                         let yVariables = listOfDataToPlot[x].variables;
 
-                        //$.get(`http://997e86c2.ngrok.io/api/out/${cropSelected}/PlantGro.OUT`).done(function (data) {
-
-                        let outFileResultResponse = httpGet(`http://997e86c2.ngrok.io/api/out/${cropSelected}/PlantGro.OUT`);
+                        let outFileResultResponse = httpGet(`${fqdn}/api/out/${cropSelected}/PlantGro.OUT`);
 
                         let outFileResult = JSON.parse(outFileResultResponse);
 
@@ -910,7 +927,6 @@
                                 }
                             }
                         }
-                        //});
                     }
                     let arrayDap = [];
                     outResult[0].values.forEach(element => {
@@ -951,9 +967,9 @@
 
             $("#tabExperiments").click(function () {
 
-                // $.get(`http://997e86c2.ngrok.io/api/experiments/${cropSelected}`).done(function (data) {
+                // $.get(`${fqdn}/api/experiments/${cropSelected}`).done(function (data) {
 
-                let experimentsResponse = httpGet(`http://997e86c2.ngrok.io/api/experiments/${cropSelected}`);
+                let experimentsResponse = httpGet(`${fqdn}/api/experiments/${cropSelected}`);
                 var experiments = JSON.parse(experimentsResponse);
 
                 let table = $("#tblExperiments");
@@ -975,9 +991,9 @@
 
             $("#tabData").click(function () {
 
-                //$.get(`http://997e86c2.ngrok.io/api/data/${cropSelected}`).done(function (data) {
+                //$.get(`${fqdn}/api/data/${cropSelected}`).done(function (data) {
 
-                let datafilesResponse = httpGet(`http://997e86c2.ngrok.io/api/data/${cropSelected}`);
+                let datafilesResponse = httpGet(`${fqdn}/api/data/${cropSelected}`);
                 var dataFiles = JSON.parse(datafilesResponse);
 
                 let table = $("#tblExperiments");
@@ -999,9 +1015,9 @@
 
             $("#tabOutput").click(function () {
 
-                //$.get(`http://997e86c2.ngrok.io/api/outFiles/${cropSelected}`).done(function (data) {
+                //$.get(`${fqdn}/api/outFiles/${cropSelected}`).done(function (data) {
 
-                let outfilesResponse = httpGet(`http://997e86c2.ngrok.io/api/outFiles/${cropSelected}`);
+                let outfilesResponse = httpGet(`${fqdn}/api/outFiles/${cropSelected}`);
 
                 let outFiles = JSON.parse(outfilesResponse);
 
@@ -1038,7 +1054,7 @@
 
                 else {
                     let experimentsJson = JSON.stringify(experimentsSelected);
-                    let url = `http://997e86c2.ngrok.io/api/runSimulation/${cropSelected}/${experimentsJson}`;
+                    let url = `${fqdn}/api/runSimulation/${cropSelected}/${experimentsJson}`;
 
                     $.get(url).done(function (data) {
                         alert(data);
@@ -1050,7 +1066,7 @@
             });
 
             $("#tabModelOutputs").click(function () {
-                let url = `http://997e86c2.ngrok.io/api/outFiles/${cropSelected}`;
+                let url = `${fqdn}/api/outFiles/${cropSelected}`;
 
                 let outfilesResponse = httpGet(url);
 
@@ -1080,7 +1096,7 @@
 
             let experimentsJson = JSON.stringify(experimentsSelected);
 
-            let url = `http://997e86c2.ngrok.io/api/treatments/${cropSelected}/${experimentsJson}`;
+            let url = `${fqdn}/api/treatments/${cropSelected}/${experimentsJson}`;
 
             let treatmentResponse = httpGet(url);
 

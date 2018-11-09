@@ -1,17 +1,17 @@
-
-const port = 3000
-const dssat = require('./dssat/dssat');
-
 const express = require('express')
+const dssat = require('./dssat/dssat')
 const app = express()
+const port = 3000
 
-app.use(express.static(__dirname + '/node_modules/'))
-app.use(express.static(__dirname + '/assets/'))
+app.get('/', (req, res) => res.send('Hello World!'))
 
-app.use((res) => {
+app.listen(port, () => console.log(`app listening on port ${port}!`))
+
+app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-})
+    next();
+  })
 
 app.get('/api/treatments/:crop/:experiments', (request, response) => {
     let crop = request.params.crop;
@@ -75,5 +75,3 @@ app.get('/api/cde', (request, response) => {
 
     response.end(JSON.stringify(cdeVariables));
 })
-
-app.listen(port)
