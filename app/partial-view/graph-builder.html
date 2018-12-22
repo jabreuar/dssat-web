@@ -1,0 +1,453 @@
+<div class="content-heading">
+      <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                  <li class="breadcrumb-item active" aria-current="page">Graph Builder</li>
+            </ol>
+      </nav>
+</div>
+<div class="card card-default">
+      <div class="card-body">
+            <form id="graphBuilderForm" action="#">
+                  <div>
+                        <h4>Available Crops
+                              <br>
+                              <small>Select a crop and what output file you'd to plot</small>
+                        </h4>
+                        <fieldset>
+                              <div class="col-md-6">
+                                    <select class="chosen-select" id="crop" style="width: 50%;">
+                                          <option>Select a crop</option>
+                                          <optgroup label="Cereals">
+                                                <option value="Barley">Barley</option>
+                                                <option value="Maize">Maize</option>
+                                                <option value="Pearl Millet">Pearl Millet</option>
+                                                <option value="Rice">Rice</option>
+                                                <option value="Grain Sorghum">Grain Sorghum</option>
+                                                <option value="Wheat">Wheat</option>
+                                          </optgroup>
+                                          <optgroup label="Legumes">
+                                                <option value="Chickpea">Chickpea</option>
+                                                <option value="Cowpea">Cowpea</option>
+                                                <option value="Dry bean">Dry bean</option>
+                                                <option value="Faba Bean">Faba Bean</option>
+                                                <option value="Peanut">Peanut</option>
+                                                <option value="Pigeon Peanut">Pigeon Peanut</option>
+                                                <option value="Soybean">Soybean</option>
+                                                <option value="Velvet Bean">Velvet Bean</option>
+                                          </optgroup>
+                                          <optgroup label="Root Crops">
+                                                <option value="Cassava">Cassava</option>
+                                                <option value="Potato">Potato</option>
+                                                <option value="Tanier">Tanier</option>
+                                                <option value="Taro">Taro</option>
+                                          </optgroup>
+                                          <optgroup label="Oil Crops">
+                                                <option value="Canola">Canola</option>
+                                                <option value="Sunflower">Sunflower</option>
+                                          </optgroup>
+                                          <optgroup label="Vegetables">
+                                                <option value="Pepper">Pepper</option>
+                                                <option value="Cabbage">Cabbage</option>
+                                                <option value="Tomato">Tomato</option>
+                                                <option value="Sweetcorn">Sweetcorn</option>
+                                                <option value="Green Bean">Green Bean</option>
+                                          </optgroup>
+                                          <optgroup label="Fiber">
+                                                <option value="Cotton">Cotton</option>
+                                          </optgroup>
+                                          <optgroup label="Forages">
+                                                <option value="Bahia Grass">Bahia Grass</option>
+                                                <option value="Brachiaria">Brachiaria</option>
+                                          </optgroup>
+                                          <optgroup label="Sugar/Energy">
+                                                <option value="Sugarcane">Sugarcane</option>
+                                          </optgroup>
+                                          <optgroup label="Fruit Crops">
+                                                <option value="Pineapple">Pineapple</option>
+                                          </optgroup>
+                                          <optgroup label="Various">
+                                                <option value="Fallow">Fallow</option>
+                                          </optgroup>
+                                    </select>
+                              </div>
+                        </fieldset>
+                        <h4>Output file and Variables
+                              <br>
+                              <small>Select all variable you'd to visualize in the graph</small>
+                        </h4>
+                        <fieldset>
+                              <p class="my-2">Ouput Files</p>
+                              <select class="form-control" style="width: 50%;" id="ddAvailableOutputFiles"></select>
+                              <br />
+                              <br />
+                              <p class="my-2">Variables</p>
+                              <select class="form-control" id="variables" style="width: 50%;" multiple>
+                              </select>
+                        </fieldset>
+                        <h4>Runs
+                              <br>
+                              <small>Select all runs</small>
+                        </h4>
+                        <fieldset>
+                              <p class="lead text-center">Almost there!</p>
+                              <select class="form-control" id="runs" style="width: 50%;" multiple></select>
+                        </fieldset>
+                        <h4>Finish</h4>
+                        <fieldset>
+                              <p class="lead text-center">All set!! Select a plot mode and click on the Finish button to
+                                    generate the graph</p>
+                              <label for="ddPlotType">Plot Mode:</label>
+                              <select class="form-control" id="ddPlotType" style="width: 50%;">
+                                    <option value="lines">Lines</option>
+                                    <option value="markers">Markers</option>
+                              </select>
+                        </fieldset>
+                        <br />
+                        <div class="row">
+                              <div class="col-md-12">
+                                    <div id="plotlyDiv">
+                                          <!-- Plotly chart will be drawn inside this DIV -->
+                                    </div>
+                              </div>
+                        </div>
+
+                  </div>
+            </form>
+      </div>
+</div>
+
+<script type="text/javascript">
+      (function (window, document, $, undefined) {
+            'use strict';
+
+           /* var jdssat = require('jdssat');
+            jdssat = new jdssat();
+            jdssat.initialize();
+
+            var storage = require('./js/storage-controller');
+            storage = new storage(window);*/
+
+            $(document).on('change', '#ddAvailableOutputFiles', function () {
+                  let crop = $('#crop').val();
+                  loadGraphVariables(crop, $(this).val());
+            });
+            $(document).on('change', '#variables', function () {
+                  setSelectedVariables();
+            });
+            $(document).on('change', '#runs', function () {
+                  setSelectedRuns();
+            });
+
+            $(initWizard);
+            $(initSelect2);
+            $(initChosen);
+
+            var listOfDataToPlot = [];
+            var listOfRuns = [];
+            var outFileSelected = "";
+            var outResult = [];
+
+            function initWizard() {
+                  if (!$.fn.validate) return;
+
+                  // FORM EXAMPLE
+                  // -----------------------------------
+                  var form = $('#graphBuilderForm');
+                  form.validate({
+                        errorPlacement: function errorPlacement(error, element) { element.before(error); },
+                        rules: {
+                              confirm: {
+                                    equalTo: "#password"
+                              }
+                        }
+                  });
+                  form.children("div").steps({
+                        headerTag: "h4",
+                        bodyTag: "fieldset",
+                        transitionEffect: "slideLeft",
+                        onStepChanging: function (event, currentIndex, newIndex) {
+                              clearPlotly();
+                              loadAvailableOutputFiles($('#crop').val());
+                              form.validate().settings.ignore = ":disabled,:hidden";
+                              return form.valid();
+                        },
+                        onFinishing: function (event, currentIndex) {
+                              form.validate().settings.ignore = ":disabled";
+                              return form.valid();
+                        },
+                        onFinished: function (event, currentIndex) {
+                              plotChart();
+                        }
+                  });
+            }
+
+            function initSelect2() {
+                  if (!$.fn.select2) return;
+
+                  $('#variables').select2({
+                        placeholder: 'Select a variable',
+                        allowClear: true
+                  });
+                  $('#runs').select2({
+                        placeholder: 'Select a run',
+                        allowClear: true
+                  });
+            }
+
+            function initChosen() {
+                  if (!$.fn.chosen) return;
+                  // CHOSEN
+                  // -----------------------------------
+                  $('.chosen-select').chosen();
+                  let cropSelected = storage.getCrop();
+                  if (cropSelected !== undefined && cropSelected !== "") {
+                        $('#crop').val(cropSelected).trigger('chosen:updated');
+                  }
+            }
+
+            function setNextStep() {
+                  form.validate().settings.ignore = ":disabled,:hidden";
+            }
+
+            function loadAvailableOutputFiles(path) {
+                  $("#ddAvailableOutputFiles").empty();
+                  let availableFiles = $("#ddAvailableOutputFiles");
+
+                  let outFiles = jdssat.outFiles(path);
+
+                  for (let i = 0; i < outFiles.length; i++) {
+                        let item = `<option value="${outFiles[i]}">${outFiles[i]}</option>`;
+                        availableFiles.append(item);
+                  }
+
+                  let outputFile = storage.getOutputFile();
+                  if (outputFile !== undefined && outputFile !== "") {
+                        $('#ddAvailableOutputFiles').val(outputFile);
+                        $('#ddAvailableOutputFiles').val('PlantGro.OUT');
+                  }
+
+                  return;
+            }
+
+            function loadGraphVariables(crop, outFile) {
+                  debugger;
+                  let out = jdssat.readOutFile(crop, outFile);
+                  let cde = jdssat.cde();
+
+                  var selectRun = $('#runs');
+                  selectRun.empty();
+                  for (let g = 0; g < out.length; g++) {
+                        let runValue = out[g].run + "|" + out[g].experiment;
+                        let el = "<option value='" + runValue + "'>" + out[g].run + "</option>";
+                        selectRun.append(el);
+                  }
+
+                  var ySelectVariables = $('#variables');
+                  ySelectVariables.empty();
+                  for (let h = 0; h < out[0].values.length; h++) {
+                        let cdeObj = cde.filter(function (item) {
+                              if (item.cde.toString().trim() == out[0].values[h].cde.toString().trim()) {
+                                    return item;
+                              }
+                        });
+
+                        if (cdeObj[0] !== undefined) {
+                              let option = "<option value='" + out[0].values[h].cde + "'>" + cdeObj[0].description.trim() + "(" + out[0].values[h].cde + ")" + "</option>";
+                              ySelectVariables.append(option);
+                        }
+                  }
+
+                  outResult = out;
+                  outFileSelected = outFile;
+
+                  let hasOutFile = listOfDataToPlot.find(out => out.name === outFile);
+
+                  if (hasOutFile) {
+                        $('#variables').val(hasOutFile.variables);
+                  }
+
+                  if (listOfRuns.length > 0) {
+                        selectRun.val(listOfRuns);
+                  }
+            }
+
+            function clearPlotly() {
+                  $('#plotlyDiv').empty();
+                  return;
+            }
+
+            function plotChart() {
+                  let runsSelected = $('#runs').val();
+                  let yVariable = $('#variables').val();
+
+                  let cde = jdssat.cde();
+                  //let crop = cropSelected != null && cropSelected !== "" ? cropSelected : folderSelected;
+                  let crop = $('#crop').val();
+
+                  if (runs.length <= 0 || yVariable.length <= 0) {
+                        alert("Select variable to plot a chart");
+                  } else {
+                        let runs = [];
+
+                        for (let i = 0; i < runsSelected.length; i++) {
+                              let runValue = runsSelected[i].split('|');
+                              runs.push(runValue[0]);
+                        }
+
+                        let columns = [];
+                        let line = [];
+                        let ploty = [];
+                        let observedDataResult = [];
+                        // read out file
+                        for (let x = 0; x < listOfDataToPlot.length; x++) {
+                              let fileName = listOfDataToPlot[x].name;
+                              let yVariables = listOfDataToPlot[x].variables;
+                              let outFileResult = jdssat.readOutFile(crop, fileName);
+
+                              for (let i = 0; i < runs.length; i++) {
+                                    let values = outFileResult.filter(function (item) {
+                                          if (item.run == runs[i]) return item.values;
+                                    });
+
+                                    for (let j = 0; j < yVariables.length; j++) {
+                                          for (let h = 0; h < values.length; h++) {
+                                                if (values[h].run === runs[i]) {
+                                                      values[h].values.forEach(element => {
+                                                            if (element.cde == yVariables[j]) {
+                                                                  // get variable description
+                                                                  let cdeObj = cde.filter(function (item) {
+                                                                        if (item.cde.toString().trim() == element.cde.toString().trim()) {
+                                                                              return item;
+                                                                        }
+                                                                  });
+
+                                                                  let run = runs[i].toString().substring(0, 26).trim();
+
+                                                                  let legend = cdeObj[0].description.trim() + " (" + run + ")";
+
+                                                                  let plotValues = {
+                                                                        'variable': cdeObj[0].description,
+                                                                        'legend': legend,
+                                                                        'values': element.values
+                                                                  }
+
+                                                                  ploty.push(plotValues);
+
+                                                                  let experiment = outFileResult.filter(function (item) {
+                                                                        if (item.run == runs[i]) return item;
+                                                                  });
+
+                                                                  let observedData = jdssat.observedData(crop, experiment[0].experiment);
+                                                                  observedDataResult.push(observedData);
+                                                            }
+                                                      });
+                                                }
+                                          }
+                                    }
+                              }
+                        }
+
+                        let arrayDAS = [];
+                        outResult[0].values.forEach(element => {
+                              if (element.cde == "DAS") {
+                                    arrayDAS.push(element.values);
+                              }
+                        });
+
+                        let das = [];
+                        let data = [];
+
+                        for (let i = 0; i < arrayDAS[0].length; i++) {
+                              das.push(parseInt(i));
+                        }
+                        for (let i = 0; i < ploty.length; i++) {
+                              let values = [];
+                              for (let j = 0; j < ploty[i].values.length; j++) {
+                                    let val = parseInt(ploty[i].values[j]);
+                                    values.push(val);
+                              }
+
+                              let plotMode = $('#ddPlotType').val();
+
+                              let trace = {
+                                    x: das,
+                                    y: values,
+                                    mode: 'plotMode',
+                                    name: ploty[i].legend.trim(),
+                              };
+
+                              data.push(trace);
+                        }
+                        let files = [];
+                        // load observed data
+                        /*for (let i = 0; i < runsSelected.length; i++) {
+                          let variableName = "";
+              
+                          for (let j = 0; j < yVariable.length; j++) {
+                            let observedVariableData = observedDataResult[j].filter(function (item) {
+                              if (item.variable == yVariable[j]) {
+                                variableName = yVariable[j];
+                                return item;
+                              }
+                            });
+                            if (observedVariableData.length > 0) {
+                              let observedvalues = [];
+                              for (let j = 0; j < observedVariableData.length; j++) {
+                                if (observedVariableData[j].treatmentNumber === "1") {
+                                  let val = parseInt(observedVariableData[j].value);
+                                  observedvalues.push(val);
+                                }
+                              }
+              
+                              let traceObserved = {
+                                x: [20, 40, 60, 80, 100, 120, 140, 160, 180],
+                                y: observedvalues,
+                                mode: 'markers',
+                                name: variableName,
+                              };
+                              if (i < 1) {
+                                //data.push(traceObserved);
+                              }
+                            }
+                          }
+                        }*/
+
+                        Plotly.newPlot('plotlyDiv', data);
+                        return;
+                  }
+            }
+
+            function setSelectedVariables() {
+                  let yVariables = $('#variables').val();
+
+                  let exists = false;
+                  let index = 0;
+
+                  for (let i = 0; i < listOfDataToPlot.length; i++) {
+                        if (listOfDataToPlot[i].name === outFileSelected) {
+                              exists = true;
+                              index = i;
+                        }
+                  }
+                  if (exists) {
+                        listOfDataToPlot[index].variables = [];
+                        listOfDataToPlot[index].variables = yVariables;
+                  } else {
+                        let item = { 'name': outFileSelected, 'variables': yVariables };
+                        listOfDataToPlot.push(item);
+                        console.log('listOfDataToPlot: ' + listOfDataToPlot);
+                  }
+            }
+
+            function setSelectedRuns() {
+                  let runs = $('#runs').val();
+
+                  listOfRuns = [];
+
+                  for (let j = 0; j < runs.length; j++) {
+                        listOfRuns.push(runs[j]);
+                  }
+            }
+
+      })(window, document, window.jQuery);
+</script>

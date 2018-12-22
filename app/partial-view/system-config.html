@@ -1,0 +1,67 @@
+<div class="content-heading">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">Settings</li>
+            <li class="breadcrumb-item active" aria-current="page">System</li>
+        </ol>
+    </nav>
+</div>
+<div class="tab-content p-0">
+    <div class="tab-pane active show" id="home" role="tabpanel">
+        <div class="row">
+            <div class="col-md-6">
+                <!-- START card-->
+                <div class="card card-default">
+                    <div class="card-header">System Configuration</div>
+                    <div class="card-body">
+                        <form>
+                            <div class="form-group">
+                                <label>DSSAT Profile</label>
+                                <input class="form-control" type="text" id="txtDssatProfile" placeholder="dssat profile">
+                            </div>
+                            <div class="form-group">
+                                <label>DSSAT Work Directory</label>
+                                <input class="form-control" type="text" id="txtDssatDirectory" placeholder="dssat directory">
+                            </div>
+                            <button class="btn btn-lg btn-primary" type="button" id="btnSave">Save</button>
+                        </form>
+                    </div>
+                </div>
+                <!-- END card-->
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    (function (window, document, $, undefined) {
+        'use strict';
+
+        var storage = require('./js/storage-controller');
+        storage = new storage(window);
+
+        var jdssat = require('jdssat');
+        jdssat = new jdssat();
+
+        // Checks if there is some path configured by user
+        let dssatBasePath = storage.getDssatBasePath();
+
+        if (dssatBasePath !== null && dssatBasePath !== undefined) {
+            jdssat.initialize(dssatBasePath);
+        } else {
+            jdssat.initialize();
+        }
+
+        let basePath = jdssat.path();
+
+        $('#txtDssatDirectory').val(basePath);
+
+        $(document).on('click', '#btnSave', function () {
+            let dssatNewBasePath = $('#txtDssatDirectory').val();
+            let dssatNewProfile = $('#txtDssatProfile').val();
+
+            storage.updateDssatBasePath(dssatNewBasePath);
+            swal("Paths updated!", "", "success");
+        });
+
+    })(window, document, window.jQuery);
+</script>

@@ -1,0 +1,151 @@
+<div class="content-heading">
+   <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+         <li class="breadcrumb-item">Settings</li>
+         <li class="breadcrumb-item active" aria-current="page">Models</li>
+      </ol>
+   </nav>
+</div>
+<div class="tab-content p-0">
+   <div class="tab-pane active show" id="home" role="tabpanel">
+      <div class="row">
+         <div class="col-md-6">
+            <!-- START card-->
+            <div class="card card-default">
+               <div class="card-header">Crops</div>
+               <div class="card-body">
+                  <form>
+                     <div class="form-group">
+                        <select class="chosen-select" id="crop" style="width: 50%;">
+                           <option>Select a crop</option>
+                           <optgroup label="Cereals">
+                              <option value="Barley">Barley</option>
+                              <option value="Maize">Maize</option>
+                              <option value="Pearl Millet">Pearl Millet</option>
+                              <option value="Rice">Rice</option>
+                              <option value="Grain Sorghum">Grain Sorghum</option>
+                              <option value="Wheat">Wheat</option>
+                           </optgroup>
+                           <optgroup label="Legumes">
+                              <option value="Chickpea">Chickpea</option>
+                              <option value="Cowpea">Cowpea</option>
+                              <option value="Dry bean">Dry bean</option>
+                              <option value="Faba Bean">Faba Bean</option>
+                              <option value="Peanut">Peanut</option>
+                              <option value="Pigeon Peanut">Pigeon Peanut</option>
+                              <option value="Soybean">Soybean</option>
+                              <option value="Velvet Bean">Velvet Bean</option>
+                           </optgroup>
+                           <optgroup label="Root Crops">
+                              <option value="Cassava">Cassava</option>
+                              <option value="Potato">Potato</option>
+                              <option value="Tanier">Tanier</option>
+                              <option value="Taro">Taro</option>
+                           </optgroup>
+                           <optgroup label="Oil Crops">
+                              <option value="Canola">Canola</option>
+                              <option value="Sunflower">Sunflower</option>
+                           </optgroup>
+                           <optgroup label="Vegetables">
+                              <option value="Pepper">Pepper</option>
+                              <option value="Cabbage">Cabbage</option>
+                              <option value="Tomato">Tomato</option>
+                              <option value="Sweetcorn">Sweetcorn</option>
+                              <option value="Green Bean">Green Bean</option>
+                           </optgroup>
+                           <optgroup label="Fiber">
+                              <option value="Cotton">Cotton</option>
+                           </optgroup>
+                           <optgroup label="Forages">
+                              <option value="Bahia Grass">Bahia Grass</option>
+                              <option value="Brachiaria">Brachiaria</option>
+                           </optgroup>
+                           <optgroup label="Sugar/Energy">
+                              <option value="Sugarcane">Sugarcane</option>
+                           </optgroup>
+                           <optgroup label="Fruit Crops">
+                              <option value="Pineapple">Pineapple</option>
+                           </optgroup>
+                           <optgroup label="Various">
+                              <option value="Fallow">Fallow</option>
+                           </optgroup>
+                        </select>
+                     </div>
+                  </form>
+               </div>
+            </div>
+            <!-- END card-->
+         </div>
+         <div class="col-md-6">
+            <!-- START card-->
+            <div class="card card-default">
+               <div class="card-header">Configuration</div>
+               <div class="card-body">
+                  <form class="form-horizontal">
+                     <div class="form-group row">
+                        <label class="col-xl-2 col-form-label">Crop</label>
+                        <div class="col-xl-10">
+                           <input class="form-control" type="text" placeholder="crop name">
+                        </div>
+                     </div>
+                     <div class="form-group row">
+                        <label class="col-xl-2 col-form-label">Crop Extension</label>
+                        <div class="col-xl-10">
+                           <input class="form-control" type="text" placeholder="crop extension">
+                        </div>
+                     </div>
+                     <div class="form-group row">
+                        <label class="col-xl-2 col-form-label">Command Line</label>
+                        <div class="col-xl-10">
+                           <input class="form-control" type="text" placeholder="command line">
+                        </div>
+                     </div>
+                     <div class="form-group row">
+                        <label class="col-xl-2 col-form-label">Data Directory</label>
+                        <div class="col-xl-10">
+                           <input class="form-control" type="text" placeholder="data directory">
+                        </div>
+                     </div>
+                     <div class="form-group row">
+                        <label class="col-xl-2 col-form-label">Model</label>
+                        <div class="col-xl-10">
+                           <input class="form-control" type="text" placeholder="model">
+                        </div>
+                     </div>
+                  </form>
+               </div>
+            </div>
+            <!-- END card-->
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-md-6">
+            <button class="btn btn-lg btn-primary" type="button">Save</button>
+         </div>
+      </div>
+   </div>
+</div>
+<script type="text/javascript">
+   (function (window, document, $, undefined) {
+      'use strict';
+
+      var jdssat = require('jdssat');
+      jdssat = new jdssat();
+      jdssat.initialize();
+
+      let dssatStorage = window.localStorage;
+
+      dssatStorage.setItem('crop', crop);
+      let cropstorege = dssatStorage.getItem('crop');
+
+      $(initChosen);
+
+      function initChosen() {
+         if (!$.fn.chosen) return;
+         // CHOSEN
+         // -----------------------------------
+         $('.chosen-select').chosen();
+      }
+
+   })(window, document, window.jQuery);
+</script>

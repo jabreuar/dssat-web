@@ -1,0 +1,453 @@
+<div class="content-heading">
+      <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                  <select class="chosen-select" id="crop" style="min-width: 100px;">
+                        <option>Select a crop</option>
+                        <optgroup label="Cereals">
+                              <option value="Barley">Barley</option>
+                              <option value="Maize">Maize</option>
+                              <option value="Pearl Millet">Pearl Millet</option>
+                              <option value="Rice">Rice</option>
+                              <option value="Grain Sorghum">Grain Sorghum</option>
+                              <option value="Wheat">Wheat</option>
+                        </optgroup>
+                        <optgroup label="Legumes">
+                              <option value="Chickpea">Chickpea</option>
+                              <option value="Cowpea">Cowpea</option>
+                              <option value="Dry bean">Dry bean</option>
+                              <option value="Faba Bean">Faba Bean</option>
+                              <option value="Peanut">Peanut</option>
+                              <option value="Pigeon Peanut">Pigeon Peanut</option>
+                              <option value="Soybean">Soybean</option>
+                              <option value="Velvet Bean">Velvet Bean</option>
+                        </optgroup>
+                        <optgroup label="Root Crops">
+                              <option value="Cassava">Cassava</option>
+                              <option value="Potato">Potato</option>
+                              <option value="Tanier">Tanier</option>
+                              <option value="Taro">Taro</option>
+                        </optgroup>
+                        <optgroup label="Oil Crops">
+                              <option value="Canola">Canola</option>
+                              <option value="Sunflower">Sunflower</option>
+                        </optgroup>
+                        <optgroup label="Vegetables">
+                              <option value="Pepper">Pepper</option>
+                              <option value="Cabbage">Cabbage</option>
+                              <option value="Tomato">Tomato</option>
+                              <option value="Sweetcorn">Sweetcorn</option>
+                              <option value="Green Bean">Green Bean</option>
+                        </optgroup>
+                        <optgroup label="Fiber">
+                              <option value="Cotton">Cotton</option>
+                        </optgroup>
+                        <optgroup label="Forages">
+                              <option value="Bahia Grass">Bahia Grass</option>
+                              <option value="Brachiaria">Brachiaria</option>
+                        </optgroup>
+                        <optgroup label="Sugar/Energy">
+                              <option value="Sugarcane">Sugarcane</option>
+                        </optgroup>
+                        <optgroup label="Fruit Crops">
+                              <option value="Pineapple">Pineapple</option>
+                        </optgroup>
+                        <optgroup label="Various">
+                              <option value="Fallow">Fallow</option>
+                        </optgroup>
+                  </select>
+            </ol>
+      </nav>
+      <button class="mb-1 btn btn-primary" type="button" id="btnRunSimulation">
+            <i class="fa fa-play-circle"></i> Run Simulation</button>
+</div>
+<div class="row">
+      <div class="col-8">
+            <!-- START card-->
+            <div class="card card-default" style="max-height: 350px;overflow-y: scroll;">
+                  <div class="card-header">Data</div>
+                  <div class="card-body">
+                        <div role="tabpanel">
+                              <!-- Nav tabs-->
+                              <ul class="nav nav-tabs" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                          <a class="nav-link active" href="#tabExperiments" aria-controls="tabExperiments"
+                                                role="tab" data-toggle="tab">Experiments</a>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                          <a class="nav-link" href="#tabDataContent" id="tabData" aria-controls="tabData"
+                                                role="tab" data-toggle="tab">Data</a>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                          <a class="nav-link" href="#tabOutputContent" id="tabOutput" aria-controls="tabOutput"
+                                                role="tab" data-toggle="tab">Output</a>
+                                    </li>
+                              </ul>
+                              <!-- Tab panes-->
+                              <div class="tab-content">
+                                    <div class="tab-pane active" id="tabExperiments" role="tabpanel">
+                                          <div class="table-responsive">
+                                                <table class="table" id="tblExperiments">
+                                                      <thead>
+                                                            <tr>
+                                                                  <th>+</th>
+                                                                  <th>#</th>
+                                                                  <th>Experiment</th>
+                                                                  <th>Description</th>
+                                                                  <th>Modified</th>
+                                                            </tr>
+                                                      </thead>
+                                                      <tbody>
+                                                      </tbody>
+                                                </table>
+                                          </div>
+                                    </div>
+                                    <div class="tab-pane" id="tabDataContent" role="tabDataContent">
+                                          <div class="panel panel-default">
+                                                <div class="panel-body" style="overflow: auto; min-height: 10vh; max-height: 20vh">
+                                                      <table id="tblDataContent" class="table">
+                                                            <thead>
+                                                                  <tr>
+                                                                        <th>+</th>
+                                                                        <th class="detail-col">Experimental
+                                                                              Data</th>
+                                                                  </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            </tbody>
+                                                      </table>
+                                                </div>
+                                                <div class="panel-footer">
+                                                      <div class="row">
+                                                            <div class="btn-group">
+                                                                  <button class="btn btn-primary btn-xs">
+                                                                        <i class="far fa-edit"></i>
+                                                                        Edit
+                                                                  </button>
+                                                                  &nbsp;
+                                                                  <button class="btn btn-primary btn-xs" id="btnViewFileFromDataContent">
+                                                                        <i class="fas fa-external-link-alt"></i>
+                                                                        View
+                                                                  </button>
+                                                                  &nbsp;
+                                                                  <button class="btn btn-primary btn-xs">
+                                                                        <i class="fas fa-chart-area"></i>
+                                                                        Plot </button>
+                                                            </div>
+                                                      </div>
+                                                </div>
+                                          </div>
+                                    </div>
+                                    <div class="tab-pane" id="tabOutputContent" role="tabpanel">
+                                          <div class="panel panel-default">
+                                                <div class="panel-body" style="overflow: auto; min-height: 10vh; max-height: 20vh">
+                                                      <table id="tblModelOutputFiles" class="table">
+                                                            <thead>
+                                                                  <tr>
+                                                                        <th>+</th>
+                                                                        <th class="detail-col">File</th>
+                                                                  </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            </tbody>
+                                                      </table>
+                                                </div>
+                                                <div class="panel-footer">
+                                                      <div class="row">
+                                                            <div class="btn-group">
+                                                                  <button class="btn btn-primary btn-xs" id="btnViewFile">
+                                                                        <i class="far fa-edit"></i>
+                                                                        View
+                                                                  </button>
+                                                                  &nbsp;
+                                                                  <button class="btn btn-primary btn-xs" id="btnPlotOutFileFromGenericOutputs">
+                                                                        <i class="fas fa-chart-area"></i>
+                                                                        Plot File
+                                                                  </button>
+                                                            </div>
+                                                      </div>
+                                                </div>
+                                          </div>
+                                    </div>
+                              </div>
+                        </div>
+                  </div>
+            </div>
+      </div>
+      <div class="col-4">
+            <div class="card card-default">
+                  <div class="card-header">Treatments</div>
+                  <div class="card-body" style="overflow: auto; min-height: 10vh; max-height: 30vh">
+                        <!-- START table-responsive-->
+                        <div class="table-responsive">
+                              <table class="table" id="tblTreatments">
+                                    <thead>
+                                          <tr>
+                                                <th>+</th>
+                                                <th>#</th>
+                                                <th>Treatments</th>
+                                                <th>Experiment</th>
+                                          </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                              </table>
+                        </div>
+                        <!-- END table-responsive-->
+                  </div>
+            </div>
+      </div>
+</div>
+
+<div class="row">
+      <div class="col-12">
+            <div class="card card-default">
+                  <div class="card-header">File Preview
+                        <label id="lblFileNamePreview"></label>
+                  </div>
+                  <div class="card-body" style="overflow: auto; max-height: 40vh">
+                        <textarea style="width: 100%; min-height: 30vh;" id="txtFileContent"></textarea>
+                  </div>
+            </div>
+      </div>
+</div>
+</div>
+
+<script type="text/javascript">
+
+      /*var jdssat = require('jdssat');
+      jdssat = new jdssat();
+      jdssat.initialize();
+
+      var storage = require('./js/storage-controller');
+      storage = new storage(window);*/
+
+      var cropSelected = "";
+
+      function loadTreatments() {
+            let experimentsSelected = [];
+            $('#tblExperiments > tbody').find('input[type="checkbox"]:checked').each(function () {
+                  experimentsSelected.push(this.name);
+            });
+
+            let experimentsJson = JSON.stringify(experimentsSelected);
+            let url = `${fqdn}/api/treatments/${cropSelected}/${experimentsJson}`;
+            $.get(url, function (data, status) {
+                  if (status === 'success') {
+                        let treatments = data;
+                        let table = $('#tblTreatments');
+                        $('#tblTreatments > tbody').empty();
+
+                        for (let i = 0; i < treatments.length; i++) {
+                              let treatObj = treatments[i].trtNo + "|" + treatments[i].experiment + "|" + treatments[i].treatment;
+                              let tr = "<tr>";
+                              tr += `<td class=\"center\"><label class=\"checkbox c-checkbox c-checkbox-rounded\"><input type=\"checkbox\" treatments="${treatObj}"></input><span class=\"fa fa-check\"></span></label></td>`;
+                              tr += `<td>${treatments[i].trtNo}</td>`;
+                              tr += `<td>${treatments[i].treatment}</td>`;
+                              tr += `<td>${treatments[i].experiment}</td>`;
+                              tr += "</tr>";
+
+                              table.append(tr);
+                        }
+                  } else {
+                        swal("An error happened!", status, "error");
+                  }
+            });
+
+
+      }
+
+      function openPreviewInExperiments(file) {
+            let url = `${fqdn}/api/filepreview/${cropSelected}/${file}`;
+            $.get(url, function (data, status) {
+                  if (status === 'success') {
+                        let fileContent = data;
+
+                        let labelContent = ": " + file;
+                        let labelName = $('#lblFileNamePreview');
+                        let fileContentElement = $('#txtFileContent');
+
+                        $(labelName).empty();
+                        $(labelName).load(labelContent);
+
+                        $(fileContentElement).empty();
+                        $(fileContentElement).val(fileContent);
+                        $(fileContentElement).each(function () {
+                              $(this).height($(this).prop('scrollHeight'));
+                        });
+                  } else {
+                        swal("An error happened!", status, "error");
+                  }
+            });
+      }
+
+      function runSimulation() {
+            if (cropSelected === "") {
+                  swal("Please select a crop", "", "warning");
+                  $('#btnRunSimulation').prop("disabled", false);
+                  return;
+            }
+
+            let experimentsSelected = [];
+            $('#tblTreatments > tbody').find('input[type="checkbox"]:checked').each(function () {
+                  let treatments = $(this).attr('treatments').split('|');
+
+                  if (treatments.length >= 2) {
+                        let obj = { trtNo: treatments[0], experiment: treatments[1], treatment: treatments[2] };
+                        experimentsSelected.push(obj);
+                  }
+            });
+
+            if (experimentsSelected <= 0) {
+                  swal("Please select a treatment", "", "warning");
+            }
+            else {
+                  let experimentsJson = JSON.stringify(experimentsSelected);
+                  let url = `${fqdn}/api/runSimulation/${cropSelected}/${experimentsJson}`;
+
+                  $.get(url, function (data, status) {
+                        if (status === 'success') {
+                              $('#btnRunSimulation').prop("disabled", false);
+                              swal("Simulation ran sucessfully!", "", "success");
+                        } else {
+                              $('#btnRunSimulation').prop("disabled", false);
+                              swal("An error happened!", status, "error");
+                        }
+                  });
+            }
+      }
+
+      function displayData() {
+            let url = `${fqdn}/api/data/${cropSelected}`;
+
+            $.get(url, function (data, status) {
+                  if (status === 'success') {
+                        let dataFiles = data;
+                        let tblDataContent = $('#tblDataContent');
+                        $("#tblDataContent > tbody").empty();
+
+                        for (let i = 0; i < dataFiles.length; i++) {
+                              let tr = `<tr onclick="openPreviewInExperiments('${dataFiles[i]}')">`;
+                              tr += `<td class=\"center\"><label class=\"checkbox c-checkbox c-checkbox-rounded\"><input type="checkbox" id="${dataFiles[i]}" value="${dataFiles[i]}" class="dataContentChk"></input><span class=\"fa fa-check\"></span></label></td>`;
+                              tr += `<td>${dataFiles[i]}</td>`;
+                              tr += "</tr>";
+                              tblDataContent.append(tr);
+                        }
+                  } else {
+                        swal("An error happened!", status, "error");
+                  }
+            });
+      }
+
+      function displayOutput() {
+            let url = `${fqdn}/api/outFiles/${cropSelected}`;
+
+            $.get(url, function (data, status) {
+                  if (status === 'success') {
+                        let outFiles = data;
+                        let tblOutFiles = $('#tblModelOutputFiles');
+
+                        $("#tblModelOutputFiles > tbody").empty();
+
+                        for (let i = 0; i < outFiles.length; i++) {
+                              let tr = `<tr onclick="openPreviewInExperiments('${outFiles[i]}')">`;
+                              tr += tr += `<td class=\"center\"><label class=\"checkbox c-checkbox c-checkbox-rounded\"><input type="checkbox" id="${outFiles[i]}" value="${outFiles[i]}" class="modelOutputChk"></input><span class=\"fa fa-check\"></span></label></td>`;
+                              tr += `<td>${outFiles[i]}</td>`;
+                              tr += "</tr>";
+                              tblOutFiles.append(tr);
+                        }
+                  } else {
+                        swal("An error happened!", status, "error");
+                  }
+            });
+      }
+
+      $(document).ready(function () {
+
+            $(initChosen);
+
+            $(document).on('change', '#crop', function () {
+                  cropSelected = $('#crop').val();
+                  loadExperiments(cropSelected);
+            });
+            $(document).on('click', '#btnRunSimulation', function () {
+                  $(this).prop("disabled", true);
+                  runSimulation();
+            });
+            $(document).on('click', '#tabOutput', function () {
+                  displayOutput();
+            });
+            $(document).on('click', '#tabData', function () {
+                  displayData();
+            });
+            $(document).on('click', ".dataContentChk", function () {
+                  let isCheckboxChecked = this.checked;
+                  $('.dataContentChk').not(this).prop('checked', false);
+                  this.checked = isCheckboxChecked;
+            });
+            $(document).on('click', ".modelOutputChk", function () {
+                  let isCheckboxChecked = this.checked;
+                  $('.modelOutputChk').not(this).prop('checked', false);
+                  this.checked = isCheckboxChecked;
+            });
+            $('#btnViewFileFromDataContent').click(function () {
+                  openFileFromOutputTab('#tblDataContent');
+            });
+            $('#btnViewFile').click(function () {
+                  openFileFromOutputTab('#tblModelOutputFiles');
+            });
+            $('#btnPlotOutFileFromGenericOutputs').click(function () {
+                  let checked = $('#tblModelOutputFiles').find('input[type="checkbox"]:checked');
+                  let file = $(checked).val();
+                  // Set file in local storage
+                  //storage.setOutputFile(file);
+                  router('graph-builder.html');
+            });
+
+            // Delete local crop from local storage once
+            //storage.delete('crop');
+            //storage.delete('outputfile');
+
+            /*function openFile(tableName) {
+                  let checked = $().find('input[type="checkbox"]:checked');
+                  let file = $(checked).val();
+                  jdssat.openFileInEditor(cropSelected, file);
+            }*/
+
+            function loadExperiments(crop) {
+                  $.get(`${fqdn}/api/experiments/${cropSelected}`, function (data, status) {
+                        if (status === 'success') {
+                              let experiments = data;
+
+                              let table = $('#tblExperiments');
+                              $('#tblExperiments > tbody').empty();
+                              $('#tblTreatments > tbody').empty();
+
+                              experiments.forEach(function (element) {
+                                    let tr = `<tr onclick="openPreviewInExperiments('${element.name}')">`;
+                                    tr += `<td class=\"center\"><label class=\"checkbox c-checkbox c-checkbox-rounded\"><input type=\"checkbox\" onclick="loadTreatments()" name=\"${element.name}\" value=\"${element.name}\""></input><span class=\"fa fa-check\"></span></label></td>`;
+                                    tr += `<td>${element.number}</td>`;
+                                    tr += `<td id="${element.name}">${element.name}</td>`;
+                                    tr += `<td>${element.description}</td>`;
+                                    tr += `<td>${element.modified}</td>`;
+                                    tr += "</tr>";
+                                    table.append(tr);
+                              }, this);
+                              return;
+                        } else {
+                              swal("An error happened!", status, "error");
+                        }
+                  });
+            }
+
+            function initChosen() {
+                  if (!$.fn.chosen) return;
+                  // CHOSEN
+                  // -----------------------------------
+                  $('.chosen-select').chosen();
+                  /*let cropSelected = storage.getCrop();
+                  if (cropSelected !== undefined && cropSelected !== "") {
+                        $('#crop').val(cropSelected).trigger('chosen:updated');
+                  }*/
+            }
+      });
+</script>
