@@ -1,0 +1,49 @@
+matrix:
+  include:
+    - os: osx
+      osx_image: xcode9.1
+    - os: linux
+      group: travis_lts
+
+language: node_js
+
+node_js:
+  - 8
+
+addons:		  
+  apt:		    
+    sources:		      
+      - ubuntu-toolchain-r-test		    
+    packages:		      
+      - g++-4.8		      
+      - icnsutils		      
+      - graphicsmagick		      
+      - libgnome-keyring-dev		      
+      - xz-utils		      
+      - xorriso		      
+      - xvfb
+    
+env:
+  global:
+    - ELECTRON_CACHE=$HOME/.cache/electron
+    - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
+    - GH_TOKEN=$CI_USER_TOKEN
+    - CHANGELOG_GITHUB_TOKEN=$CI_USER_TOKEN
+
+cache:
+  yarn: true
+  directories:
+    - node_modules
+    - $HOME/.cache/electron
+    - $HOME/.cache/electron-builder
+
+before_cache:
+  - rm -rf $HOME/.cache/electron-builder/wine
+
+after_success:
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]] && [[ "$TRAVIS_BRANCH" == "master" ]]; then yarn app-release-ci; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]] && [[ "$TRAVIS_BRANCH" == "master" ]]; then yarn app-release-ci --win --mac; fi
+
+branches:
+  only:
+    - master

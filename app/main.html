@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+      <!-- Insert this line above script imports  -->
+      <script>
+            if (typeof module === 'object') { window.module = module; module = undefined; }
+      </script>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+      <meta name="description" content="Bootstrap Admin App + jQuery">
+      <meta name="keywords" content="DSSAT, responsive, jquery, bootstrap, dashboard, admin">
+      <link rel="icon" type="image/x-icon" href="dssat_logo_176x47_nEf_icon.ico">
+      <title>DSSAT - Lite</title>
+      <!-- =============== VENDOR STYLES ===============-->
+      <!-- FONT AWESOME-->
+      <link rel="stylesheet" href="vendor/@fortawesome/fontawesome-free-webfonts/css/fa-brands.css">
+      <link rel="stylesheet" href="vendor/@fortawesome/fontawesome-free-webfonts/css/fa-regular.css">
+      <link rel="stylesheet" href="vendor/@fortawesome/fontawesome-free-webfonts/css/fa-solid.css">
+      <link rel="stylesheet" href="vendor/@fortawesome/fontawesome-free-webfonts/css/fontawesome.css">
+      <!-- SIMPLE LINE ICONS-->
+      <link rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.css">
+      <!-- ANIMATE.CSS-->
+      <link rel="stylesheet" href="vendor/animate.css/animate.css">
+      <!-- WHIRL (spinners)-->
+      <link rel="stylesheet" href="vendor/whirl/dist/whirl.css">
+      <!-- =============== PAGE VENDOR STYLES ===============-->
+      <!-- WEATHER ICONS-->
+      <link rel="stylesheet" href="vendor/weather-icons/css/weather-icons.css">
+      <!-- =============== BOOTSTRAP STYLES ===============-->
+      <link rel="stylesheet" href="css/bootstrap.css" id="bscss">
+      <!-- SELECT2-->
+      <link rel="stylesheet" href="vendor/select2/dist/css/select2.css">
+      <link rel="stylesheet" href="vendor/@ttskch/select2-bootstrap4-theme/dist/select2-bootstrap4.css">
+      <!-- CHOSEN-->
+      <link rel="stylesheet" href="vendor/chosen-js/chosen.css">
+      <!-- SWEET ALERT-->
+      <link rel="stylesheet" href="vendor/sweetalert/dist/sweetalert.css">
+      <!-- Loaders.css-->
+      <link rel="stylesheet" href="vendor/loaders.css/loaders.css">
+      <!-- =============== APP STYLES ===============-->
+      <link rel="stylesheet" href="css/app.css" id="maincss">
+</head>
+
+<body>
+      <div class="ball-grid-pulse" id="loader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+      </div>
+      <div class="wrapper">
+            <!-- top navbar-->
+            <header class="topnavbar-wrapper">
+                  <!-- START Top Navbar-->
+                  <nav class="navbar topnavbar">
+                        <!-- START navbar header-->
+                        <div class="navbar-header">
+                              <a class="navbar-brand" href="#/">
+                                    <div class="brand-logo">
+                                          <img src="img/DSSAT-LOGO-176x47.png" alt="DSSAT Logo" />
+                                    </div>
+                                    <div class="brand-logo-collapsed">
+                                          <img class="img-fluid" src="img/logo-single.png" alt="DSSAT Logo" />
+                                    </div>
+                              </a>
+                        </div>
+                        <!-- END navbar header-->
+                        <!-- START Left navbar-->
+                        <ul class="navbar-nav mr-auto flex-row">
+                              <li class="nav-item">
+                                    <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
+                                    <a class="nav-link d-none d-md-block d-lg-block d-xl-block" href="#"
+                                          data-trigger-resize="" data-toggle-state="aside-collapsed">
+                                          <em class="fas fa-bars"></em>
+                                    </a>
+                                    <!-- Button to show/hide the sidebar on mobile. Visible on mobile only.-->
+                                    <a class="nav-link sidebar-toggle d-md-none" href="#" data-toggle-state="aside-toggled"
+                                          data-no-persist="true">
+                                          <em class="fas fa-bars"></em>
+                                    </a>
+                              </li>
+                              <!-- END Graph-->
+                        </ul>
+                        <!-- END Left navbar-->
+                        <!-- START Right Navbar-->
+                        <ul class="navbar-nav flex-row">
+                              <!-- START Offsidebar button-->
+                              <li class="nav-item">
+                                    <a class="nav-link" href="#" data-toggle-state="offsidebar-open" data-no-persist="true"
+                                          title="Click to see style options">
+                                          <em class="icon-notebook"></em>
+                                    </a>
+                              </li>
+                              <!-- END Offsidebar menu-->
+                        </ul>
+                        <!-- END Right Navbar-->
+                  </nav>
+                  <!-- END Top Navbar-->
+            </header>
+            <!-- sidebar-->
+            <aside class="aside-container">
+                  <!-- START Sidebar (left)-->
+                  <div class="aside-inner">
+                        <nav class="sidebar" data-sidebar-anyclick-close="">
+                              <!-- START sidebar nav-->
+                              <ul class="sidebar-nav">
+                                    <!-- Iterates over all sidebar items-->
+                                    <li class="nav-heading ">
+                                          <span data-localize="sidebar.heading.HEADER">Main Navigation</span>
+                                    </li>
+                                    <li class=" ">
+                                          <a href="#" onclick="router('simulation.html')" title="Click to to run a simulation">
+                                                <i class="fa fa-play"></i>
+                                                <span>Simulation</span>
+                                          </a>
+                                    </li>
+                                    <li class=" ">
+                                          <a href="#" onclick="router('graph-builder.html')" title="Click to open graph builder">
+                                                <i class="fa fa-chart-line"></i>
+                                                <span> Graph Builder</span>
+                                          </a>
+                                    </li>
+                                    <li class="">
+                                          <a href="#" title="Click to see DSSAT version info">
+                                                <i class="fas fa-code-branch"></i>
+                                                <span>Version Info</span>
+                                          </a>
+                                    </li>
+                                    <li class="">
+                                          <a href="#" title="Click to contact information">
+                                                <i class="fas fa-envelope"></i>
+                                                <span>Contact</span>
+                                          </a>
+                                    </li>
+                              </ul>
+                              <!-- END sidebar nav-->
+                        </nav>
+                  </div>
+                  <!-- END Sidebar (left)-->
+            </aside>
+            <!-- offsidebar-->
+            <aside class="offsidebar d-none">
+                  <!-- START Off Sidebar (right)-->
+                  <nav>
+                        <div role="tabpanel">
+                              <!-- Nav tabs-->
+                              <ul class="nav nav-tabs nav-justified" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                          <a class="nav-link active" href="#app-settings" aria-controls="app-settings"
+                                                role="tab" data-toggle="tab">
+                                                <em class="icon-equalizer fa-lg"></em>
+                                          </a>
+                                    </li>
+                              </ul>
+                              <!-- Tab panes-->
+                              <div class="tab-content">
+                                    <div class="tab-pane fade active show" id="app-settings" role="tabpanel">
+                                          <h3 class="text-center text-thin mt-4">Settings</h3>
+                                          <div class="p-2">
+                                                <h4 class="text-muted text-thin">Themes</h4>
+                                                <div class="row row-flush mb-2">
+                                                      <div class="col mb-2">
+                                                            <div class="setting-color">
+                                                                  <label data-load-css="css/theme-a.css">
+                                                                        <input type="radio" name="setting-theme"
+                                                                              checked="checked">
+                                                                        <span class="icon-check"></span>
+                                                                        <span class="split">
+                                                                              <span class="color bg-info"></span>
+                                                                              <span class="color bg-info-light"></span>
+                                                                        </span>
+                                                                        <span class="color bg-white"></span>
+                                                                  </label>
+                                                            </div>
+                                                      </div>
+                                                      <div class="col mb-2">
+                                                            <div class="setting-color">
+                                                                  <label data-load-css="css/theme-b.css">
+                                                                        <input type="radio" name="setting-theme">
+                                                                        <span class="icon-check"></span>
+                                                                        <span class="split">
+                                                                              <span class="color bg-green"></span>
+                                                                              <span class="color bg-green-light"></span>
+                                                                        </span>
+                                                                        <span class="color bg-white"></span>
+                                                                  </label>
+                                                            </div>
+                                                      </div>
+                                                      <div class="col mb-2">
+                                                            <div class="setting-color">
+                                                                  <label data-load-css="css/theme-c.css">
+                                                                        <input type="radio" name="setting-theme">
+                                                                        <span class="icon-check"></span>
+                                                                        <span class="split">
+                                                                              <span class="color bg-purple"></span>
+                                                                              <span class="color bg-purple-light"></span>
+                                                                        </span>
+                                                                        <span class="color bg-white"></span>
+                                                                  </label>
+                                                            </div>
+                                                      </div>
+                                                      <div class="col mb-2">
+                                                            <div class="setting-color">
+                                                                  <label data-load-css="css/theme-d.css">
+                                                                        <input type="radio" name="setting-theme">
+                                                                        <span class="icon-check"></span>
+                                                                        <span class="split">
+                                                                              <span class="color bg-danger"></span>
+                                                                              <span class="color bg-danger-light"></span>
+                                                                        </span>
+                                                                        <span class="color bg-white"></span>
+                                                                  </label>
+                                                            </div>
+                                                      </div>
+                                                </div>
+                                                <div class="row row-flush mb-2">
+                                                      <div class="col mb-2">
+                                                            <div class="setting-color">
+                                                                  <label data-load-css="css/theme-e.css">
+                                                                        <input type="radio" name="setting-theme">
+                                                                        <span class="icon-check"></span>
+                                                                        <span class="split">
+                                                                              <span class="color bg-info-dark"></span>
+                                                                              <span class="color bg-info"></span>
+                                                                        </span>
+                                                                        <span class="color bg-gray-dark"></span>
+                                                                  </label>
+                                                            </div>
+                                                      </div>
+                                                      <div class="col mb-2">
+                                                            <div class="setting-color">
+                                                                  <label data-load-css="css/theme-f.css">
+                                                                        <input type="radio" name="setting-theme">
+                                                                        <span class="icon-check"></span>
+                                                                        <span class="split">
+                                                                              <span class="color bg-green-dark"></span>
+                                                                              <span class="color bg-green"></span>
+                                                                        </span>
+                                                                        <span class="color bg-gray-dark"></span>
+                                                                  </label>
+                                                            </div>
+                                                      </div>
+                                                      <div class="col mb-2">
+                                                            <div class="setting-color">
+                                                                  <label data-load-css="css/theme-g.css">
+                                                                        <input type="radio" name="setting-theme">
+                                                                        <span class="icon-check"></span>
+                                                                        <span class="split">
+                                                                              <span class="color bg-purple-dark"></span>
+                                                                              <span class="color bg-purple"></span>
+                                                                        </span>
+                                                                        <span class="color bg-gray-dark"></span>
+                                                                  </label>
+                                                            </div>
+                                                      </div>
+                                                      <div class="col mb-2">
+                                                            <div class="setting-color">
+                                                                  <label data-load-css="css/theme-h.css">
+                                                                        <input type="radio" name="setting-theme">
+                                                                        <span class="icon-check"></span>
+                                                                        <span class="split">
+                                                                              <span class="color bg-danger-dark"></span>
+                                                                              <span class="color bg-danger"></span>
+                                                                        </span>
+                                                                        <span class="color bg-gray-dark"></span>
+                                                                  </label>
+                                                            </div>
+                                                      </div>
+                                                </div>
+                                          </div>
+                                          <div class="p-2">
+                                                <h4 class="text-muted text-thin">Layout</h4>
+                                                <div class="clearfix">
+                                                      <p class="float-left">Fixed</p>
+                                                      <div class="float-right">
+                                                            <label class="switch">
+                                                                  <input id="chk-fixed" type="checkbox"
+                                                                        data-toggle-state="layout-fixed">
+                                                                  <span></span>
+                                                            </label>
+                                                      </div>
+                                                </div>
+                                                <div class="clearfix">
+                                                      <p class="float-left">Boxed</p>
+                                                      <div class="float-right">
+                                                            <label class="switch">
+                                                                  <input id="chk-boxed" type="checkbox"
+                                                                        data-toggle-state="layout-boxed">
+                                                                  <span></span>
+                                                            </label>
+                                                      </div>
+                                                </div>
+                                                <div class="clearfix">
+                                                      <p class="float-left">RTL</p>
+                                                      <div class="float-right">
+                                                            <label class="switch">
+                                                                  <input id="chk-rtl" type="checkbox">
+                                                                  <span></span>
+                                                            </label>
+                                                      </div>
+                                                </div>
+                                          </div>
+                                          <div class="p-2">
+                                                <h4 class="text-muted text-thin">Aside</h4>
+                                                <div class="clearfix">
+                                                      <p class="float-left">Collapsed</p>
+                                                      <div class="float-right">
+                                                            <label class="switch">
+                                                                  <input id="chk-collapsed" type="checkbox"
+                                                                        data-toggle-state="aside-collapsed">
+                                                                  <span></span>
+                                                            </label>
+                                                      </div>
+                                                </div>
+                                                <div class="clearfix">
+                                                      <p class="float-left">Collapsed Text</p>
+                                                      <div class="float-right">
+                                                            <label class="switch">
+                                                                  <input id="chk-collapsed-text" type="checkbox"
+                                                                        data-toggle-state="aside-collapsed-text">
+                                                                  <span></span>
+                                                            </label>
+                                                      </div>
+                                                </div>
+                                                <div class="clearfix">
+                                                      <p class="float-left">Float</p>
+                                                      <div class="float-right">
+                                                            <label class="switch">
+                                                                  <input id="chk-float" type="checkbox"
+                                                                        data-toggle-state="aside-float">
+                                                                  <span></span>
+                                                            </label>
+                                                      </div>
+                                                </div>
+                                                <div class="clearfix">
+                                                      <p class="float-left">Hover</p>
+                                                      <div class="float-right">
+                                                            <label class="switch">
+                                                                  <input id="chk-hover" type="checkbox"
+                                                                        data-toggle-state="aside-hover">
+                                                                  <span></span>
+                                                            </label>
+                                                      </div>
+                                                </div>
+                                                <div class="clearfix">
+                                                      <p class="float-left">Show Scrollbar</p>
+                                                      <div class="float-right">
+                                                            <label class="switch">
+                                                                  <input id="chk-scroll" type="checkbox"
+                                                                        data-toggle-state="show-scrollbar" data-target=".sidebar">
+                                                                  <span></span>
+                                                            </label>
+                                                      </div>
+                                                </div>
+                                          </div>
+                                    </div>
+                              </div>
+                        </div>
+                  </nav>
+                  <!-- END Off Sidebar (right)-->
+            </aside>
+            <!-- Main section-->
+            <section class="section-container">
+                  <!-- Page content-->
+                  <div class="content-wrapper" id="page-content">
+
+                  </div>
+      </div>
+      </section>
+      <!-- Page footer-->
+      <footer class="footer-container">
+            <span>&copy; 2018 - DSSAT Foundation</span>
+      </footer>
+      </div>
+      <!-- =============== VENDOR SCRIPTS ===============-->
+      <!-- MODERNIZR-->
+      <script src="vendor/modernizr/modernizr.custom.js"></script>
+      <!-- JQUERY-->
+      <script src="vendor/jquery/dist/jquery.js"></script>
+      <!-- BOOTSTRAP-->
+      <script src="vendor/popper.js/dist/umd/popper.js"></script>
+      <script src="vendor/bootstrap/dist/js/bootstrap.js"></script>
+      <!-- STORAGE API-->
+      <script src="vendor/js-storage/js.storage.js"></script>
+      <!-- JQUERY EASING-->
+      <script src="vendor/jquery.easing/jquery.easing.js"></script>
+      <!-- ANIMO-->
+      <script src="vendor/animo/animo.js"></script>
+      <!-- SCREENFULL-->
+      <script src="vendor/screenfull/dist/screenfull.js"></script>
+      <!-- LOCALIZE-->
+      <script src="vendor/jquery-localize/dist/jquery.localize.js"></script>
+      <!-- =============== PAGE VENDOR SCRIPTS ===============-->
+      <!-- SLIMSCROLL-->
+      <script src="vendor/jquery-slimscroll/jquery.slimscroll.js"></script>
+      <!-- SPARKLINE-->
+      <script src="vendor/jquery-sparkline/jquery.sparkline.js"></script>
+      <!-- FLOT CHART-->
+      <script src="vendor/flot/jquery.flot.js"></script>
+      <script src="vendor/jquery.flot.tooltip/js/jquery.flot.tooltip.js"></script>
+      <script src="vendor/flot/jquery.flot.resize.js"></script>
+      <script src="vendor/flot/jquery.flot.pie.js"></script>
+      <script src="vendor/flot/jquery.flot.time.js"></script>
+      <script src="vendor/flot/jquery.flot.categories.js"></script>
+      <script src="vendor/jquery.flot.spline/jquery.flot.spline.js"></script>
+      <!-- EASY PIE CHART-->
+      <script src="vendor/easy-pie-chart/dist/jquery.easypiechart.js"></script>
+      <!-- MOMENT JS-->
+      <script src="vendor/moment/min/moment-with-locales.js"></script>
+      <!-- VECTOR MAP-->
+      <script src="vendor/ika.jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+      <script src="vendor/ika.jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+      <script src="vendor/ika.jvectormap/jquery-jvectormap-us-mill-en.js"></script>
+      <!-- JQUERY VALIDATE-->
+      <script src="vendor/jquery-validation/dist/jquery.validate.js"></script>
+      <script src="vendor/jquery-validation/dist/additional-methods.js"></script>
+      <!-- JQUERY STEPS-->
+      <script src="vendor/jquery-steps/build/jquery.steps.js"></script>
+      <!-- TREE VIEW JS-->
+      <script src="vendor/bootstrap-treeview-master/src/js/bootstrap-treeview.js"></script>
+      <!-- SELECT2-->
+      <script src="vendor/select2/dist/js/select2.full.js"></script>
+      <!-- CHOSEN-->
+      <script src="vendor/chosen-js/chosen.jquery.js"></script>
+      <!-- SWEET ALERT-->
+      <script src="vendor/sweetalert/dist/sweetalert.min.js"></script>
+      <!-- PLOTY-->
+      <script src="vendor/plotly/plotly-latest.min.js"></script>
+      <!-- =============== APP SCRIPTS ===============-->
+      <script src="js/app.js"></script>
+</body>
+
+<script>
+
+      const MAIN_CONTENT = '#page-content';
+      const SIMULATION_VIEW = 'simulation.html';
+      var fqdn = "http://localhost:3000";
+
+      function loadResource(uri) {
+            let result = "";
+            $.ajax({
+                  type: 'GET',
+                  url: uri,
+                  async: false,
+                  success: function (data) {
+                        $(MAIN_CONTENT).html(data);
+                  },
+                  error: function (err) {
+                        swal("An error happened!", err, "error");
+                  }
+            });
+      }
+      function router(view) {
+            loadResource(`${fqdn}/load/${view}`);
+      }
+</script>
+
+</html>

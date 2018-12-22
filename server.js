@@ -1,50 +1,66 @@
 const express = require('express')
-const dssat = require('./dssat/dssat')
+
+const fs = require('fs')
+const path = require('path')
 const app = express()
 const port = 3000
+
+var jdssat = require('jdssat')
+jdssat = new jdssat();
+jdssat.initialize();
 
 app.get('/', (req, res) => res.send('Hello World!'))
 
 app.listen(port, () => console.log(`app listening on port ${port}!`))
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
-  })
+})
 
 app.get('/api/treatments/:crop/:experiments', (request, response) => {
     let crop = request.params.crop;
     let experiments = request.params.experiments;
     let experimentsObj = JSON.parse(experiments);
-    dssat.initialize();
-    let treatments = dssat.treatments(crop, experimentsObj);
-    response.end(JSON.stringify(treatments));
+    
+    let treatments = jdssat.treatments(crop, experimentsObj);
+
+    response.writeHead(200, { 'Content-Type': 'application/json' });
+    response.write(JSON.stringify(treatments));
+    response.end();
 })
 
 app.get('/api/experiments/:crop', (request, response) => {
     let crop = request.params.crop;
-    console.log(crop);
-    dssat.initialize();
-    let experiments = dssat.experiments(crop);
+        
+    let experiments = jdssat.experiments(crop);
+
+    response.writeHead(200, { 'Content-Type': 'application/json' });
+    response.write(JSON.stringify(experiments));
+    response.end();
+
     response.end(JSON.stringify(experiments));
 })
 
 app.get('/api/data/:crop', (request, response) => {
     let crop = request.params.crop;
-    console.log(crop);
-    dssat.initialize();
-    let experiments = dssat.getDataFiles(crop);
-    response.end(JSON.stringify(experiments));
+    
+    let dataFiles = jdssat.getDataFiles(crop);
+
+    response.writeHead(200, { 'Content-Type': 'application/json' });
+    response.write(JSON.stringify(dataFiles));
+    response.end();
 })
 
 app.get('/api/outFiles/:crop', (request, response) => {
     let crop = request.params.crop;
-    console.log(crop);
-    dssat.initialize();
-    let outFiles = dssat.outFiles(crop);
+    
+    let outFiles = jdssat.outFiles(crop);
 
-    response.end(JSON.stringify(outFiles));
+    response.writeHead(200, { 'Content-Type': 'application/json' });
+    response.write(JSON.stringify(outFiles));
+    response.end();
 })
 
 app.get('/api/runSimulation/:crop/:experiments', (request, response) => {
@@ -52,26 +68,55 @@ app.get('/api/runSimulation/:crop/:experiments', (request, response) => {
     let experiments = request.params.experiments;
     let experimentsObj = JSON.parse(experiments);
 
-    dssat.initialize();
-    dssat.runSimulation(crop, experimentsObj);
+    jdssat.runSimulation(crop, experimentsObj, callback);
 
-    response.end("simulations are completed");
+    function callback() {
+        response.writeHead(200, { 'Content-Type': 'application/json' });
+        response.write("success");
+        response.end();
+    }
 })
 
 app.get('/api/out/:crop/:file', (request, response) => {
     let crop = request.params.crop;
     let outfile = request.params.file;
 
-    dssat.initialize();
-    let fileContent = dssat.readOutFile(crop, outfile);
+    let fileContent = jdssat.readOutFile(crop, outfile);
 
-    response.end(JSON.stringify(fileContent));
+    response.writeHead(200, { 'Content-Type': 'application/json' });
+    response.write(JSON.stringify(fileContent));
+    response.end();
 })
 
 app.get('/api/cde', (request, response) => {
+    let cdeVariables = jdssat.cde();
+    response.writeHead(200, { 'Content-Type': 'application/json' });
+    response.write(JSON.stringify(cdeVariables));
+    response.end();
+})
 
-    dssat.initialize();
-    let cdeVariables = dssat.cde();
+app.get('/api/filepreview/:crop/:file', (request, response) => {
+    let cropSelected = request.params.crop;
+    let file = request.params.file;
+    let preview = jdssat.filePreview(cropSelected, file);
+   
+    response.writeHead(200, { 'Content-Type': 'text/html' });
+    response.write(preview);
+    response.end();
+})
 
-    response.end(JSON.stringify(cdeVariables));
+app.get('/load/:view', (request, response) => {
+    let partialView = request.params.view;
+    let filePath = path.join(__dirname, 'app/partial-view/' + partialView);
+
+    fs.readFile(filePath, { encoding: 'utf-8' }, function (err, data) {
+        if (!err) {
+            console.log('received data: ' + data);
+            response.writeHead(200, { 'Content-Type': 'text/html' });
+            response.write(data);
+            response.end();
+        } else {
+            console.log(err);
+        }
+    });
 })
