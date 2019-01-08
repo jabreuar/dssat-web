@@ -23,7 +23,7 @@ app.get('/api/treatments/:crop/:experiments', (request, response) => {
     let crop = request.params.crop;
     let experiments = request.params.experiments;
     let experimentsObj = JSON.parse(experiments);
-    
+
     let treatments = jdssat.treatments(crop, experimentsObj);
 
     response.writeHead(200, { 'Content-Type': 'application/json' });
@@ -33,7 +33,7 @@ app.get('/api/treatments/:crop/:experiments', (request, response) => {
 
 app.get('/api/experiments/:crop', (request, response) => {
     let crop = request.params.crop;
-        
+
     let experiments = jdssat.experiments(crop);
 
     response.writeHead(200, { 'Content-Type': 'application/json' });
@@ -45,7 +45,7 @@ app.get('/api/experiments/:crop', (request, response) => {
 
 app.get('/api/data/:crop', (request, response) => {
     let crop = request.params.crop;
-    
+
     let dataFiles = jdssat.getDataFiles(crop);
 
     response.writeHead(200, { 'Content-Type': 'application/json' });
@@ -55,7 +55,7 @@ app.get('/api/data/:crop', (request, response) => {
 
 app.get('/api/outFiles/:crop', (request, response) => {
     let crop = request.params.crop;
-    
+
     let outFiles = jdssat.outFiles(crop);
 
     response.writeHead(200, { 'Content-Type': 'application/json' });
@@ -71,10 +71,13 @@ app.get('/api/runSimulation/:crop/:experiments', (request, response) => {
     jdssat.runSimulation(crop, experimentsObj, callback);
 
     function callback() {
+        console.log('callback simulation');
         response.writeHead(200, { 'Content-Type': 'application/json' });
-        response.write("success");
+        response.write(JSON.stringify("success"));
         response.end();
     }
+
+
 })
 
 app.get('/api/out/:crop/:file', (request, response) => {
@@ -99,7 +102,7 @@ app.get('/api/filepreview/:crop/:file', (request, response) => {
     let cropSelected = request.params.crop;
     let file = request.params.file;
     let preview = jdssat.filePreview(cropSelected, file);
-   
+
     response.writeHead(200, { 'Content-Type': 'text/html' });
     response.write(preview);
     response.end();

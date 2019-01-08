@@ -252,8 +252,6 @@
                         swal("An error happened!", status, "error");
                   }
             });
-
-
       }
 
       function openPreviewInExperiments(file) {
@@ -301,11 +299,12 @@
                   swal("Please select a treatment", "", "warning");
             }
             else {
+                  debugger;
                   let experimentsJson = JSON.stringify(experimentsSelected);
                   let url = `${fqdn}/api/runSimulation/${cropSelected}/${experimentsJson}`;
 
                   $.get(url, function (data, status) {
-                        if (status === 'success') {
+                        if (data === 'success') {
                               $('#btnRunSimulation').prop("disabled", false);
                               swal("Simulation ran sucessfully!", "", "success");
                         } else {

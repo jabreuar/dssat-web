@@ -94,7 +94,8 @@
                         </fieldset>
                         <h4>Finish</h4>
                         <fieldset>
-                              <p class="lead text-center">All set!! Select a plot mode and click on the Finish button to
+                              <p class="lead text-center">All set!! Select a plot mode and click on the Finish button
+                                    to
                                     generate the graph</p>
                               <label for="ddPlotType">Plot Mode:</label>
                               <select class="form-control" id="ddPlotType" style="width: 50%;">
@@ -120,12 +121,12 @@
       (function (window, document, $, undefined) {
             'use strict';
 
-           /* var jdssat = require('jdssat');
-            jdssat = new jdssat();
-            jdssat.initialize();
-
-            var storage = require('./js/storage-controller');
-            storage = new storage(window);*/
+            /* var jdssat = require('jdssat');
+             jdssat = new jdssat();
+             jdssat.initialize();
+ 
+             var storage = require('./js/storage-controller');
+             storage = new storage(window);*/
 
             $(document).on('change', '#ddAvailableOutputFiles', function () {
                   let crop = $('#crop').val();
@@ -199,10 +200,10 @@
                   // CHOSEN
                   // -----------------------------------
                   $('.chosen-select').chosen();
-                  let cropSelected = storage.getCrop();
+                  /*let cropSelected = storage.getCrop();
                   if (cropSelected !== undefined && cropSelected !== "") {
                         $('#crop').val(cropSelected).trigger('chosen:updated');
-                  }
+                  }*/
             }
 
             function setNextStep() {
@@ -213,62 +214,86 @@
                   $("#ddAvailableOutputFiles").empty();
                   let availableFiles = $("#ddAvailableOutputFiles");
 
-                  let outFiles = jdssat.outFiles(path);
+                  let url = `${fqdn}/api/outFiles/${cropSelected}`;
+                  $.get(url, function (data, status) {
+                        if (status === 'success') {
+                              let outfilesResponse = data;
 
-                  for (let i = 0; i < outFiles.length; i++) {
-                        let item = `<option value="${outFiles[i]}">${outFiles[i]}</option>`;
-                        availableFiles.append(item);
-                  }
+                              for (let i = 0; i < outfilesResponse.length; i++) {
+                                    let item = `<option value="${outfilesResponse[i]}">${outfilesResponse[i]}</option>`;
+                                    availableFiles.append(item);
+                              }
+                        } else {
+                              swal("An error happened!", status, "error");
+                        }
+                  });
 
-                  let outputFile = storage.getOutputFile();
+                  /*let outputFile = storage.getOutputFile();
                   if (outputFile !== undefined && outputFile !== "") {
                         $('#ddAvailableOutputFiles').val(outputFile);
                         $('#ddAvailableOutputFiles').val('PlantGro.OUT');
-                  }
+                  }*/
 
                   return;
             }
 
             function loadGraphVariables(crop, outFile) {
-                  debugger;
-                  let out = jdssat.readOutFile(crop, outFile);
-                  let cde = jdssat.cde();
+                  let outDataUrl = `${fqdn}/api/out/${cropSelected}/PlantGro.OUT`;
+                  let cdeDataUrl = `${fqdn}/api/cde`;
 
-                  var selectRun = $('#runs');
-                  selectRun.empty();
-                  for (let g = 0; g < out.length; g++) {
-                        let runValue = out[g].run + "|" + out[g].experiment;
-                        let el = "<option value='" + runValue + "'>" + out[g].run + "</option>";
-                        selectRun.append(el);
-                  }
+                  $.get(outDataUrl, function (data, status) {
+                        if (status === 'success') {
+                              let out = data;
 
-                  var ySelectVariables = $('#variables');
-                  ySelectVariables.empty();
-                  for (let h = 0; h < out[0].values.length; h++) {
-                        let cdeObj = cde.filter(function (item) {
-                              if (item.cde.toString().trim() == out[0].values[h].cde.toString().trim()) {
-                                    return item;
-                              }
-                        });
+                              $.get(cdeDataUrl, function (data, status) {
+                                    if (status === 'success') {
+                                          let cde = data;
+                                          var selectRun = $('#runs');
+                                          selectRun.empty();
+                                          for (let g = 0; g < out.length; g++) {
+                                                let runValue = out[g].run + "|" + out[g].experiment;
+                                                let el = "<option value='" + runValue + "'>" + out[g].run + "</option>";
+                                                selectRun.append(el);
+                                          }
 
-                        if (cdeObj[0] !== undefined) {
-                              let option = "<option value='" + out[0].values[h].cde + "'>" + cdeObj[0].description.trim() + "(" + out[0].values[h].cde + ")" + "</option>";
-                              ySelectVariables.append(option);
+                                          var ySelectVariables = $('#variables');
+                                          ySelectVariables.empty();
+                                          for (let h = 0; h < out[0].values.length; h++) {
+                                                let cdeObj = cde.filter(function (item) {
+                                                      if (item.cde.toString().trim() == out[0].values[h].cde.toString().trim()) {
+                                                            return item;
+                                                      }
+                                                });
+
+                                                if (cdeObj[0] !== undefined) {
+                                                      let option = "<option value='" + out[0].values[h].cde + "'>" + cdeObj[0].description.trim() + "(" + out[0].values[h].cde + ")" + "</option>";
+                                                      ySelectVariables.append(option);
+                                                }
+                                          }
+
+                                          outResult = out;
+                                          outFileSelected = outFile;
+
+                                          let hasOutFile = listOfDataToPlot.find(out => out.name === outFile);
+
+                                          if (hasOutFile) {
+                                                $('#variables').val(hasOutFile.variables);
+                                          }
+
+                                          if (listOfRuns.length > 0) {
+                                                selectRun.val(listOfRuns);
+                                          }
+                                    } else {
+                                          swal("An error happened!", status, "error");
+                                    }
+
+                              });
+
+
+                        } else {
+                              swal("An error happened!", status, "error");
                         }
-                  }
-
-                  outResult = out;
-                  outFileSelected = outFile;
-
-                  let hasOutFile = listOfDataToPlot.find(out => out.name === outFile);
-
-                  if (hasOutFile) {
-                        $('#variables').val(hasOutFile.variables);
-                  }
-
-                  if (listOfRuns.length > 0) {
-                        selectRun.val(listOfRuns);
-                  }
+                  });
             }
 
             function clearPlotly() {
@@ -279,142 +304,122 @@
             function plotChart() {
                   let runsSelected = $('#runs').val();
                   let yVariable = $('#variables').val();
+                  let cdeDataUrl = `${fqdn}/api/cde`;
 
-                  let cde = jdssat.cde();
-                  //let crop = cropSelected != null && cropSelected !== "" ? cropSelected : folderSelected;
-                  let crop = $('#crop').val();
+                  debugger;
 
-                  if (runs.length <= 0 || yVariable.length <= 0) {
-                        alert("Select variable to plot a chart");
-                  } else {
-                        let runs = [];
+                  $.get(cdeDataUrl, function (data, status) {
+                        if (status === 'success') {
+                              let cde = data;
 
-                        for (let i = 0; i < runsSelected.length; i++) {
-                              let runValue = runsSelected[i].split('|');
-                              runs.push(runValue[0]);
-                        }
+                              //let crop = cropSelected != null && cropSelected !== "" ? cropSelected : folderSelected;
+                              let crop = $('#crop').val();
 
-                        let columns = [];
-                        let line = [];
-                        let ploty = [];
-                        let observedDataResult = [];
-                        // read out file
-                        for (let x = 0; x < listOfDataToPlot.length; x++) {
-                              let fileName = listOfDataToPlot[x].name;
-                              let yVariables = listOfDataToPlot[x].variables;
-                              let outFileResult = jdssat.readOutFile(crop, fileName);
+                              if (runs.length <= 0 || yVariable.length <= 0) {
+                                    alert("Select variable to plot a chart");
+                              } else {
+                                    let runs = [];
 
-                              for (let i = 0; i < runs.length; i++) {
-                                    let values = outFileResult.filter(function (item) {
-                                          if (item.run == runs[i]) return item.values;
-                                    });
+                                    for (let i = 0; i < runsSelected.length; i++) {
+                                          let runValue = runsSelected[i].split('|');
+                                          runs.push(runValue[0]);
+                                    }
 
-                                    for (let j = 0; j < yVariables.length; j++) {
-                                          for (let h = 0; h < values.length; h++) {
-                                                if (values[h].run === runs[i]) {
-                                                      values[h].values.forEach(element => {
-                                                            if (element.cde == yVariables[j]) {
-                                                                  // get variable description
-                                                                  let cdeObj = cde.filter(function (item) {
-                                                                        if (item.cde.toString().trim() == element.cde.toString().trim()) {
-                                                                              return item;
-                                                                        }
-                                                                  });
+                                    let columns = [];
+                                    let line = [];
+                                    let ploty = [];
+                                    let observedDataResult = [];
 
-                                                                  let run = runs[i].toString().substring(0, 26).trim();
+                                    let file = listOfDataToPlot[0].name;
+                                    let yVariables = listOfDataToPlot[0].variables;
+                                    let outDataUrl = `${fqdn}/api/out/${cropSelected}/${file}`;
 
-                                                                  let legend = cdeObj[0].description.trim() + " (" + run + ")";
+                                    $.get(outDataUrl, function (data, status) {
+                                          if (status === 'success') {
+                                                let outFileResult = data;
 
-                                                                  let plotValues = {
-                                                                        'variable': cdeObj[0].description,
-                                                                        'legend': legend,
-                                                                        'values': element.values
+                                                for (let i = 0; i < runs.length; i++) {
+                                                      let values = outFileResult.filter(function (item) {
+                                                            if (item.run == runs[i]) return item.values;
+                                                      });
+
+                                                      for (let j = 0; j < yVariables.length; j++) {
+                                                            for (let h = 0; h < values.length; h++) {
+                                                                  if (values[h].run === runs[i]) {
+                                                                        values[h].values.forEach(element => {
+                                                                              if (element.cde == yVariables[j]) {
+                                                                                    // get variable description
+                                                                                    let cdeObj = cde.filter(function (item) {
+                                                                                          if (item.cde.toString().trim() == element.cde.toString().trim()) {
+                                                                                                return item;
+                                                                                          }
+                                                                                    });
+
+                                                                                    let run = runs[i].toString().substring(0, 26).trim();
+
+                                                                                    let legend = cdeObj[0].description.trim() + " (" + run + ")";
+
+                                                                                    let plotValues = {
+                                                                                          'variable': cdeObj[0].description,
+                                                                                          'legend': legend,
+                                                                                          'values': element.values
+                                                                                    }
+
+                                                                                    ploty.push(plotValues);
+
+                                                                                    let experiment = outFileResult.filter(function (item) {
+                                                                                          if (item.run == runs[i]) return item;
+                                                                                    });
+
+                                                                                    //let observedData = jdssat.observedData(crop, experiment[0].experiment);
+                                                                                    //observedDataResult.push(observedData);
+                                                                              }
+                                                                        });
                                                                   }
+                                                            }
+                                                      }
 
-                                                                  ploty.push(plotValues);
-
-                                                                  let experiment = outFileResult.filter(function (item) {
-                                                                        if (item.run == runs[i]) return item;
-                                                                  });
-
-                                                                  let observedData = jdssat.observedData(crop, experiment[0].experiment);
-                                                                  observedDataResult.push(observedData);
+                                                      let arrayDAS = [];
+                                                      outResult[0].values.forEach(element => {
+                                                            if (element.cde == "DAS") {
+                                                                  arrayDAS.push(element.values);
                                                             }
                                                       });
+
+                                                      let das = [];
+                                                      let data = [];
+
+                                                      for (let i = 0; i < arrayDAS[0].length; i++) {
+                                                            das.push(parseInt(i));
+                                                      }
+                                                      for (let i = 0; i < ploty.length; i++) {
+                                                            let values = [];
+                                                            for (let j = 0; j < ploty[i].values.length; j++) {
+                                                                  let val = parseInt(ploty[i].values[j]);
+                                                                  values.push(val);
+                                                            }
+
+                                                            let plotMode = $('#ddPlotType').val();
+
+                                                            let trace = {
+                                                                  x: das,
+                                                                  y: values,
+                                                                  mode: 'plotMode',
+                                                                  name: ploty[i].legend.trim(),
+                                                            };
+
+                                                            data.push(trace);
+                                                      }
+                                                     
+                                                      Plotly.newPlot('plotlyDiv', data);
                                                 }
                                           }
-                                    }
+                                    });
+
+                                    return;
                               }
                         }
-
-                        let arrayDAS = [];
-                        outResult[0].values.forEach(element => {
-                              if (element.cde == "DAS") {
-                                    arrayDAS.push(element.values);
-                              }
-                        });
-
-                        let das = [];
-                        let data = [];
-
-                        for (let i = 0; i < arrayDAS[0].length; i++) {
-                              das.push(parseInt(i));
-                        }
-                        for (let i = 0; i < ploty.length; i++) {
-                              let values = [];
-                              for (let j = 0; j < ploty[i].values.length; j++) {
-                                    let val = parseInt(ploty[i].values[j]);
-                                    values.push(val);
-                              }
-
-                              let plotMode = $('#ddPlotType').val();
-
-                              let trace = {
-                                    x: das,
-                                    y: values,
-                                    mode: 'plotMode',
-                                    name: ploty[i].legend.trim(),
-                              };
-
-                              data.push(trace);
-                        }
-                        let files = [];
-                        // load observed data
-                        /*for (let i = 0; i < runsSelected.length; i++) {
-                          let variableName = "";
-              
-                          for (let j = 0; j < yVariable.length; j++) {
-                            let observedVariableData = observedDataResult[j].filter(function (item) {
-                              if (item.variable == yVariable[j]) {
-                                variableName = yVariable[j];
-                                return item;
-                              }
-                            });
-                            if (observedVariableData.length > 0) {
-                              let observedvalues = [];
-                              for (let j = 0; j < observedVariableData.length; j++) {
-                                if (observedVariableData[j].treatmentNumber === "1") {
-                                  let val = parseInt(observedVariableData[j].value);
-                                  observedvalues.push(val);
-                                }
-                              }
-              
-                              let traceObserved = {
-                                x: [20, 40, 60, 80, 100, 120, 140, 160, 180],
-                                y: observedvalues,
-                                mode: 'markers',
-                                name: variableName,
-                              };
-                              if (i < 1) {
-                                //data.push(traceObserved);
-                              }
-                            }
-                          }
-                        }*/
-
-                        Plotly.newPlot('plotlyDiv', data);
-                        return;
-                  }
+                  });
             }
 
             function setSelectedVariables() {
